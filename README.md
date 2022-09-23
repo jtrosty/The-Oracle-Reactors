@@ -1,6 +1,6 @@
 # CIS 4301 Group Project
 ## Texas Automobile Collision Trends Analyzer (TACTA)
-### Contributors: Dylan Tosh, Jonathan Trost, Conor Wojtak, and Parth Yagnik
+### Contributors: Dylan Tosh, Jonathan Trost, Connor Wojtak, and Parth Yagnik
 
 Texas Automobile Collision Trends Analyzer (TACTA) is a database based web application that analyzes variety of factors that cause car collisions in state of Texas.
 
