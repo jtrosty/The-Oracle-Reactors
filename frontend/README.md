@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# CIS 4301 Group Project
+## Texas Automobile Collision Trends Analyzer (TACTA)
+### Contributors: Jonathan Trost, Dylan Tosh, Conor Wojtak and Parth Yagnik
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Texas Automobile Collision Trends Analyzer (TACTA) is a database based web application that analyzes variety of factors that cause car collisions in state of Texas.
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+#### Pre requisites
+1. node.js
+2. Oracle instant client
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Built With
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* ![React][React.js]
+* ![Node.js][Node.js]
+* ![Express.js][Express.js]
+* ![Oracle][Oracle]
+#### To steup Backend:
+1. Create a folder to hold all this, then inside that folder create backend folder.
 
-### `npm test`
+2. ```sh
+    cd backend
+    ```
+3.  ```sh
+    npm init-y
+    ```
+4. ```sh
+    npm i --save express
+    ```
+5. ```sh
+    npm i --save-dev nodemon dotenv oracledb
+    ```
+    
+6. In backend folder make file ``` server.js```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+7. Copy and paste the code from oracle node.js setup site into server.js.
 
-### `npm run build`
+8. create a ```.env ``` file in backend directory
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+9. In ```.env```  file add:
+    USER_NAME=jonathan.trost Your gatorID 
+    DB_PASSWORD= This is the passowrd you get from: https://register.cise.ufl.edu/oracle/
+    DB_URL=//oracle.cise.ufl.edu/orcl
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+10. Ensure the following is at the top of ```server.js```
+    ```const dotenv = require('dotenv');```
+    ```dotenv.config();```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+11. in the ```getConnnection``` line in user: put ```process.env.USER_NAME```, for password: ```process.env.DB_PASSWORD```, for conneciton ```string process.env.DB_URL```
 
-### `npm run eject`
+12. Now in ```terminal``` type ```node server.js```, you will know if it worked if you see the following: ```Successfully connected to Oracle Database```. Make sure you are connected to the CISE VPN! 5 Rows Inserted Task 1 is NOT done Task 2 is NOT done Task 3 is done Task 4 is NOT done Task 5 is done
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### To Steup Frontend:
+1. Go into directory that has backend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Type ```npx create-react-app Oracle_Reactors```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. This will make new directory, calle doracle reactors, go into it and test that it works npm start.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. ```sh
+    npm install bootstrap
+    ```
+    
+5. ```sh
+    npm install react-bootstrap
+    ```
+    
+6. ```sh
+    npm install react-router-dom
+    ```
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### To setup project in new directory:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1.  Go to a directory you want to setup the project.
 
-### Code Splitting
+2. Git clone the repo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. Find the node_modules folder in your react app and move it to the frontend folder.
 
-### Analyzing the Bundle Size
+4. Find the node_modules folder in your backend server and move it into the backend folder.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+5. Test npm start in frontend.
 
-### Making a Progressive Web App
+6. Test nodemon server.js in the backend. (make sure you're connected to cise vpn)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+[Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 
-### Deployment
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Oracle]: https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black
