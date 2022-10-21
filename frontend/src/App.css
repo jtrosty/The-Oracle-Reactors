@@ -13,19 +13,151 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.App-body {
+	background-color: #213756;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 1vmin);
+	color: #04080f;
 }
 
-.App-link {
-  color: #61dafb;
+.App-title {
+	display: inline;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+	padding-bottom: 30px;
+}
+
+.App-title p {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	font-size: calc(5px + 2vmin);
+}
+
+.frontPageCenter {
+	background-color: #142235;
+	display: inline-block;
+	width: calc(600px + 4vmin);
+	height: calc(200px + 0.5vmin);
+	line-height: 1.5;
+	font-size: calc(20px + 1vmin);
+	border: 8px;
+	border-color: #0b121c;
+	border-style: solid;
+	text-align: center;
+}
+
+.frontPageCenter a {
+	line-height: 2;
+}
+
+.frontPageCenter a:link {
+	color: #8ac4ff;
+}
+
+.frontPageCenter a:visited {
+	color: #8a8aff;
+}
+
+.frontPageCenter a:hover {
+	color: #c1c1e3;
+}
+
+.frontPageCenter a:after {
+	content:"\a";
+	white-space: pre;
+}
+
+.frontPageCenterBlockLeft {
+	vertical: align-middle;
+	display: inline-block;
+	padding-right: calc(10px + 0.5vmin);
+}
+
+.frontPageCenterBlockRight {
+	vertical: align-middle;
+	display: inline-block;
+	padding-left: calc(10px + 0.5vmin);
+}
+
+.sideNavBar {
+	background-color: #142235;
+	display: inline-block;
+	vertical: align-middle;
+	width: 15%;
+	height: 100vh;
+	line-height: 1.5;
+	font-size: calc(15px + 1vmin);
+	box-sizing: border-box;
+	border: 8px;
+	border-color: #0b121c;
+	border-style: solid;
+}
+
+.sideNavBar h1 {
+	display: block;
+	text-align: center;
+	font-size: calc(15px + 2vmin);
+	color: white;
+}
+
+.sideNavBar a {
+	line-height: 2;
+	display: block;
+	text-align: center;
+}
+
+.sideNavBar a:link {
+	color: #8ac4ff;
+}
+
+.sideNavBar a:visited {
+	color: #8a8aff;
+}
+
+.sideNavBar a:hover {
+	color: #c1c1e3;
+}
+
+.sideNavBar a:after {
+	content:"\a";
+	white-space: pre;
+}
+
+.bodyContainer {
+	background-color: #213756;
+	display: inline-block;
+	width: 85%;
+	height: 100vh;
+	line-height: 1.5;
+	font-size: calc(20px + 1vmin);
+	text-align: center;
+	vertical: align-middle;
+	vertical-align: top;
+	box-sizing: border-box;
+	padding-left: 20px;
+	text-align: left;
+	font-size: calc(15px + 1vmin);
+	color: white;
+}
+
+.bodyContainer h1 {
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 4px;
+	border-color: white;
+	border-style: solid;
+	width: calc(100% - 16px);
+}
+
+.queryContainer {
 }
 
 @keyframes App-logo-spin {
