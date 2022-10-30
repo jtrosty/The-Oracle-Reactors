@@ -1,20 +1,23 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Texas Automobile Collision Trends Analyzer (TACTA) is a database based web application that analyzes variety of factors that cause car collisions in state of Texas.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node": "^19.0.0"
   },
   "devDependencies": {
-    "dotenv": "^16.0.2",
-    "nodemon": "^2.0.19",
-    "oracledb": "^5.4.0"
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20",
+    "oracledb": "^5.5.0"
   }
 }

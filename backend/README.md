@@ -33,7 +33,7 @@ Texas Automobile Collision Trends Analyzer (TACTA) is a database based web appli
     ```
 
 5. ```sh
-    npm i --save-dev nodemon dotenv oracledb
+    npm i --save-dev nodemon dotenv oracledb cors
     ```
     
 6. In backend directory, make file ``` server.js```
