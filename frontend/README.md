@@ -35,3 +35,7 @@ Texas Automobile Collision Trends Analyzer (TACTA) is a database based web appli
 6. ```sh
     npm install react-router-dom
     ```
+
+7. ```sh
+    npm install axios
+    ```
