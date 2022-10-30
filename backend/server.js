@@ -1,6 +1,44 @@
+const express = require('express');
 const oracledb = require('oracledb');
 const dotenv = require('dotenv');
+const { appendFile } = require('fs');
+
+const app = express();
+
 dotenv.config();
+
+const PORT = 5000;
+
+var cors = require('cors');
+
+app.use(cors());
+app.use(express.json());
+
+app.listen(PORT, ()=>{console.log(`listen to port ${PORT}`);})
+
+app.get('/getPerson', async (req, res) => {
+    async function fetchPerson() {
+      try {
+        const connection = await oracledb.getConnection({ 
+          user: process.env.USER_NAME, 
+          password: process.env.DB_PASSWORD, 
+          connectionString: process.env.DB_URL 
+        });
+
+        oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+        const result = await connection.execute(`select * from PERSON where (CRASH_ID = 12529587)`)
+        return result;
+
+      } catch(error) {
+        return error;
+      }
+    }
+
+    fetchPerson()
+    .then(dbRes =>{
+      res.send(dbRes);
+    })
+})
 
 async function run() {
 
@@ -14,6 +52,7 @@ async function run() {
 
     // Create a table
 
+    /*
     await connection.execute(`begin
                                 execute immediate 'drop table todoitem';
                                 exception when others then if sqlcode <> -942 then raise; end if;
@@ -42,11 +81,13 @@ async function run() {
     console.log(result.rowsAffected, "Rows Inserted");
 
     connection.commit();
+    */
 
     // Now query the rows back
 
+    
     result = await connection.execute(
-      `select description, done from todoitem`,
+      `select * from PERSON where (AGE = 18) AND ETHNICITY = 1`,
       [],
       { resultSet: true, outFormat: oracledb.OUT_FORMAT_OBJECT });
 
@@ -55,9 +96,9 @@ async function run() {
 
     while ((row = await rs.getRow())) {
       if (row.DONE)
-        console.log(row.DESCRIPTION, "is done");
+        console.log(row.DIED, "is dead");
       else
-        console.log(row.DESCRIPTION, "is NOT done");
+        console.log(row.AGE, "is Old");
     }
 
     await rs.close();
@@ -75,9 +116,14 @@ async function run() {
   }
 }
 
-run();
+//run();
 
 /*
+        const result = await connection.execute(
+          `select * from PERSON where (AGE = 18) AND (ETHNICITY = 1)`,
+          [],
+          { resultSet: true, outFormat: oracledb.OUT_FORMAT_ARRAY });
+          return result;
 const express = require('express');
 const oracledb = require('oracledb');
 const app = express();
