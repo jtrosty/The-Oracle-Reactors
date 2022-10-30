@@ -1,0 +1,23 @@
+{
+  "name": "the-oracle-reactors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jtrosty/The-Oracle-Reactors.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jtrosty/The-Oracle-Reactors/issues"
+  },
+  "homepage": "https://github.com/jtrosty/The-Oracle-Reactors#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
