@@ -4,13 +4,10 @@ import { useState } from 'react';
 import moment from 'moment';
 const { RangePicker } = DatePicker;
 
-
 function Date() {
 
   const [dates, setDates] = useState([])
   console.log(dates)
-
-  
 
   return (
     <div style={{ margin: 20 }}>
