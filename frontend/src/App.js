@@ -8,7 +8,7 @@ import Query3 from './Query3.js'
 import Query4 from './Query4.js'
 import Query5 from './Query5.js'
 import FAQ from './FAQ.js'
-import SidePageLinkSelection from './Navigation.js'
+import SidePageLinkSelection from './components/Navigation.js'
 
 const Main = () => {
 	return (

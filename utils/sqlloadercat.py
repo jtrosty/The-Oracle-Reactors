@@ -9,13 +9,13 @@ def unzipDirectory(sourceZip, targetDirectory):
        
 def binaryToBoolChar(num):
     if num == 1:
-        return "\'Y\'" 
+        return "Y" 
     elif num == 0:
-        return "\'N\'"
+        return "N"
     elif num == "Y":
-        return "\'Y\'" 
+        return "Y" 
     elif num == "N":
-        return "\'N\'"
+        return "N"
     else:
         return "NULL"
         
@@ -39,7 +39,7 @@ def formatCrashTime(ct):
                 hour = "0" + str(hour)
             else:
                 hour = str(hour)
-            return "to_date(\'" + hour + ":" + minute + "\',\'HH24::MI\')"
+            return hour + ":" + minute
         elif (len(ct) == 7):
             hour = int(ct[:1])
             minute = ct[2:4]
@@ -52,7 +52,7 @@ def formatCrashTime(ct):
                 hour = "0" + str(hour)
             else:
                 hour = str(hour)
-            return "to_date(\'" + hour + ":" + minute + "\',\'HH24::MI\')"
+            return hour + ":" + minute
         else:
             return "NULL"
     else:
@@ -60,13 +60,12 @@ def formatCrashTime(ct):
 
 def formatCrashDate(cd):
     if isinstance(cd, str):
-        return "to_date(\'" + cd + "\',\'MM/DD/YY\')"
+        return cd
     else:
         return "NULL"
        
 def buildCrashEntry(cid, aszf, ai, cdc, czf, ssf, ysf, tct, dow, ctic, ct, cd, cm, cy):
-    command = "insert into Crash values(" #BASE
-    command += strOrNull(cid) + "," #CID
+    command = strOrNull(cid) + "," #CID
     command += binaryToBoolChar(aszf) + "," #ASZF
     command += binaryToBoolChar(ai) + "," #AI
     command += strOrNull(cdc) + "," #CDC
@@ -74,12 +73,12 @@ def buildCrashEntry(cid, aszf, ai, cdc, czf, ssf, ysf, tct, dow, ctic, ct, cd, c
     command += binaryToBoolChar(ssf) + "," #SSF
     command += binaryToBoolChar(ysf) + "," #YSF
     command += strOrNull(tct) + "," #TCT
-    command += "\'" + (dow or "NULL") + "\'," #DOW
+    command += (dow or "NULL") + "," #DOW
     command += strOrNull(ctic) + "," #CTIC
     command += formatCrashTime(ct) + "," #CT
     command += formatCrashDate(cd) + "," #CD
     command += strOrNull(cm) + "," #CM
-    command += strOrNull(cy) + ");\n" #CY
+    command += strOrNull(cy) + ",\n" #CY
     return command;
 
 def buildCrash(root, files, outfilenamebase):
@@ -111,8 +110,7 @@ def buildCrash(root, files, outfilenamebase):
     crashsql.close()
 
 def buildUnitEntry(cid, un, dc, vmn, vm, nic, tic, vmy, cf1, cf2, cf3, cvt, d):
-    command = "insert into Unit values(" #BASE
-    command += strOrNull(cid) + "," #CID
+    command = strOrNull(cid) + "," #CID
     command += strOrNull(un) + "," #UN
     command += strOrNull(dc) + "," #DC
     command += strOrNull(vmn) + "," #VMN
@@ -124,7 +122,7 @@ def buildUnitEntry(cid, un, dc, vmn, vm, nic, tic, vmy, cf1, cf2, cf3, cvt, d):
     command += strOrNull(cf2) + "," #CF2
     command += strOrNull(cf3) + "," #CF3
     command += strOrNull(cvt) + "," #CVT
-    command += strOrNull(d) + ");\n" #D
+    command += strOrNull(d) + ",\n" #D
     return command
 
 def buildUnit(root, files, outfilenamebase):
@@ -145,8 +143,7 @@ def buildUnit(root, files, outfilenamebase):
     unitsql.close()
 
 def buildPersonEntry(cid, un, pn, c, d, a, e, g, ni):
-    command = "insert into Person values(" #BASE
-    command += strOrNull(cid) + "," #CID
+    command = strOrNull(cid) + "," #CID
     command += strOrNull(un) + "," #UN
     command += strOrNull(pn) + "," #PN
     command += binaryToBoolChar(c) + "," #C
@@ -154,7 +151,7 @@ def buildPersonEntry(cid, un, pn, c, d, a, e, g, ni):
     command += strOrNull(a) + "," #A
     command += strOrNull(e) + "," #E
     command += strOrNull(g) + "," #G
-    command += binaryToBoolChar(ni) + ");\n" #NI
+    command += binaryToBoolChar(ni) + ",\n" #NI
     return command
 
 def buildPerson(root, files, outfilenamebase):
@@ -209,7 +206,7 @@ def createSubYearFiles(root, files, outfilenamebase):
     buildPerson(root, files, outfilenamebase)
 
 def createYearFiles(root, files, outfilenamebase):
-    crashsql = open(outfilenamebase + "-Crash.sql", "w")
+    crashsql = open(outfilenamebase + "-Crash.csv", "w")
     
     for attrfile in files:
         if not ".cat" in attrfile or not "Crash" in attrfile:
@@ -219,7 +216,7 @@ def createYearFiles(root, files, outfilenamebase):
             subcrashsql.close()
     crashsql.close()
     
-    unitsql = open(outfilenamebase + "-Unit.sql", "w")
+    unitsql = open(outfilenamebase + "-Unit.csv", "w")
     
     for attrfile in files:
         if not ".cat" in attrfile or not "Unit" in attrfile:
@@ -229,7 +226,7 @@ def createYearFiles(root, files, outfilenamebase):
             subunitsql.close()
     unitsql.close()
     
-    personsql = open(outfilenamebase + "-Person.sql", "w")
+    personsql = open(outfilenamebase + "-Person.csv", "w")
     
     for attrfile in files:
         if not ".cat" in attrfile or not "Person" in attrfile:
