@@ -26,7 +26,7 @@ app.get('/getPerson', async (req, res) => {
         });
 
         oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-        const result = await connection.execute(`select * from PERSON where (CRASH_ID = 12529587)`)
+        const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
         return result;
 
       } catch(error) {
@@ -87,7 +87,7 @@ async function run() {
 
     
     result = await connection.execute(
-      `select * from PERSON where (AGE = 18) AND ETHNICITY = 1`,
+      `select * from "JONATHAN.TROST".PERSON where (AGE = 18) AND ETHNICITY = 1`,
       [],
       { resultSet: true, outFormat: oracledb.OUT_FORMAT_OBJECT });
 

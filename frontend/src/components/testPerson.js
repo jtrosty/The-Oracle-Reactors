@@ -4,7 +4,6 @@ import { createBrowserRouter } from 'react-router-dom';
 
 //const axios = require('axios');
 
-
 const Test = () => {
         const [personData, setPersonData] = useState(null);
         const url = 'http://localhost:5000'
@@ -13,7 +12,7 @@ const Test = () => {
 
         const {data} = axios.get(`${url}/getPerson`)
         .then((response) => {
-             setPersonData(response.data);
+            setPersonData(response.data);
             console.log(response.data);
         })
         .then((error) => {

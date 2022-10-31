@@ -12,8 +12,6 @@ function Time(){
     const[times,setTimes] = useState([]);
     console.log(times);
 
-
-
     return(
         <div style ={{margin:20}}>
             <RangePicker 
