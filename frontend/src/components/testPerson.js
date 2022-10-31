@@ -1,9 +1,9 @@
+/*
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { createBrowserRouter } from 'react-router-dom';
 
 //const axios = require('axios');
-
 
 const Test = () => {
         const [personData, setPersonData] = useState(null);
@@ -13,7 +13,7 @@ const Test = () => {
 
         const {data} = axios.get(`${url}/getPerson`)
         .then((response) => {
-             setPersonData(response.data);
+            setPersonData(response.data);
             console.log(response.data);
         })
         .then((error) => {
@@ -32,12 +32,11 @@ const Test = () => {
 
 export default Test;
 
-/*
+
 export default () => {
     const [personData, setPersonData] = useState('');
     const url = 'http://localhost:5000'
     const data = null;
-
     axios.get(`${url}/getPerson`)
     .then((response) => {
         console.log(response.data);
@@ -49,7 +48,6 @@ export default () => {
     }) 
     useEffect(() => {
     }, [])
-
     return (
     <div>
     <div></div>
