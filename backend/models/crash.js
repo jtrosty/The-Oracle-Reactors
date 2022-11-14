@@ -1,5 +1,5 @@
+//Format to take response.data and format it in the frontend
 const oracle = require('oracledb')
-
 
 /*********************************************************************
  * 
