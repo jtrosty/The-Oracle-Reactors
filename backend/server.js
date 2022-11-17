@@ -75,7 +75,7 @@ app.get('/getQuery2', async (req, res) => {
 
 //Query 3
 app.get('/getQuery3', async (req, res) => {
-    async function fetchPerson() {
+    async function fetchQuery3() {
       try {
         const connection = await oracledb.getConnection({ 
           user: process.env.USER_NAME, 
@@ -93,7 +93,7 @@ app.get('/getQuery3', async (req, res) => {
       }
     }
 
-    fetchPerson()
+    fetchQuery3()
     .then(dbRes =>{
       res.send(dbRes);
     })
@@ -102,10 +102,9 @@ app.get('/getQuery3', async (req, res) => {
     })
 })
 
-/* 
 //Query 4
 app.get('/getQuery4', async (req, res) => {
-  async function fetchPerson() {
+  async function fetchQuery4() {
     try {
       const connection = await oracledb.getConnection({ 
         user: process.env.USER_NAME, 
@@ -114,7 +113,21 @@ app.get('/getQuery4', async (req, res) => {
       });
 
       oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-      const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
+      const result = await connection.execute(`
+	  SELECT 
+		TO_CHAR(TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96, 'HH24::MI::SS')
+		AS CRASH_TIME,
+		AVG(TOTAL_INJURY_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100 
+		AS PercentInjury, 
+		AVG(DEATH_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100
+		AS PercentDeath
+		FROM "DYLANTOSH".Unit U
+		JOIN "CWOJTAK".Crash C ON C.CRASH_ID = U.CRASH_ID
+		WHERE TOTAL_INJURY_COUNT + NOT_INJURED_COUNT <> 0
+		GROUP BY
+			TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96
+		ORDER BY CRASH_TIME ASC
+	  `)
       return result;
 
     } 
@@ -123,7 +136,7 @@ app.get('/getQuery4', async (req, res) => {
     }
   }
 
-  fetchPerson()
+  fetchQuery4()
   .then(dbRes =>{
     res.send(dbRes);
   })
@@ -132,6 +145,7 @@ app.get('/getQuery4', async (req, res) => {
   })
 })
 
+/*
 //Query 5
 app.get('/getQuery5', async (req, res) => {
   async function fetchPerson() {

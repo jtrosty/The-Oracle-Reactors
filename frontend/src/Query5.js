@@ -6,6 +6,8 @@ const Query5 = () => {
 	<div className="bodyContainer">
 		<h1>Query 5 - Relating Citation Rates After Accidents and Time</h1>
 		<div className="queryContainer">
+			<div className="chartContainer">
+			</div>
 		</div>
 	</div>
   );

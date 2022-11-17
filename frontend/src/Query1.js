@@ -6,6 +6,8 @@ const Query1 = () => {
 		<div className="bodyContainer">
 			<h1>Query 1 - Correlating Contributing Factors and Collisions</h1>
 			<div className="queryContainer">
+				<div className="chartContainer">
+				</div>
 			</div>
 		</div>
 	);

@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-function Chart() {
+function Chart3() {
   const options = {
     responsive: true,
     plugins: {
@@ -54,4 +54,4 @@ function Chart() {
   );
 }
 
-export default Chart;
+export default Chart3;
