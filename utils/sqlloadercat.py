@@ -183,9 +183,10 @@ def buildPerson(root, files, outfilenamebase):
     persondata = persondata[~persondata.index.duplicated(keep='first')]
     
     for index, row in persondata.iterrows():
-        citation = "N"
-        if row["Citation_Nbr"] != None:
-            citation = "Y"
+        citation = "Y"
+
+        if (isinstance(row["Citation_Nbr"], float) and math.isnan(row["Citation_Nbr"])):
+            citation = "N"
         
         died = "N"
         if row["Death_Cnt"] > 0:

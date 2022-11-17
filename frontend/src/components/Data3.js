@@ -1,6 +1,6 @@
 //Set data values for Query 3
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 
 class Data3 extends React.Component {
 
