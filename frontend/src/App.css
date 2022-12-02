@@ -22,6 +22,26 @@
 	padding-bottom: 30px;
 }
 
+.App-title h1 {
+	color: white;
+	font-size: 2em;
+	font-weight: bold;
+	margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.App-title h3 {
+	color: white;
+	font-size: 1.17em;
+	font-weight: bold;
+	margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
 .App-title p {
 	display: inline-block;
 	margin: 0;
@@ -44,6 +64,7 @@
 
 .frontPageCenter a {
 	line-height: 2;
+	text-decoration: underline;
 }
 
 .frontPageCenter a:link {
@@ -100,12 +121,18 @@
 	text-align: center;
 	font-size: calc(15px + 2vmin);
 	color: white;
+	font-weight: bold;
+	margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 .sideNavBar a {
 	line-height: 2;
 	display: block;
 	text-align: center;
+	text-decoration: underline;
 }
 
 .sideNavBar a:link {
@@ -147,8 +174,61 @@
 	border-right: 0px;
 	border-bottom: 4px;
 	border-color: white;
+	color: white;
+	font-size: 2em;
+	font-weight: bold;
 	border-style: solid;
 	width: calc(100% - 16px);
+	margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.bodyContainer button {
+    appearance: auto;
+    writing-mode: horizontal-tb !important;
+    font-style: ;
+    font-variant-ligatures: ;
+    font-variant-caps: ;
+    font-variant-numeric: ;
+    font-variant-east-asian: ;
+    font-weight: ;
+    font-stretch: ;
+    font-size: ;
+    font-family: ;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: buttonface;
+    margin-top: 0.1em;
+    padding: 3px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial;
+}
+
+.bodyContainer h3 {
+	color: white;
+	font-size: 1.17em;
+	font-weight: bold;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+}
+
+.bodyContainer input {
+	height: 2.5em;
 }
 
 .queryContainer {
@@ -161,4 +241,13 @@
 	border-color: white;
 	border-style: solid;
 	padding: 15px;
+}
+
+.inlineOption {
+	padding-top: 0.5em;
+	display: flex;
+	flex-direction: row;
+}
+.inlineOption p {
+	padding-right: 1em;
 }

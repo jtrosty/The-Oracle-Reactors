@@ -5,17 +5,19 @@ import Chart4 from "./Chart4.js"
 
 class Data4 extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      data: undefined
+      data: undefined,
+	  chartType: props.chartType,
+	  filters: props.filters
     }
   }
 
   componentDidMount() {
     axios.get('http://localhost:5000/getQuery4')
       .then((response) => {
-        //console.log(response.data.rows); //Debug information
+        console.log(response.data.rows); //Debug information
         if(response.data.rows === undefined)
 		{
 			this.componentDidMount()
@@ -35,8 +37,10 @@ class Data4 extends React.Component {
 		return ( <p>Loading chart; please wait...</p> );
 	}
 
+	var ct = this.state.chartType;
+
     return (
-		<Chart4 data4={ret} />
+		<Chart4 data4={ret} inType={ct} />
     );
   }
 }
