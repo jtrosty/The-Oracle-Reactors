@@ -2,9 +2,7 @@ import React from 'react';
 import './App.css'
 import Data4 from './components/Data4';
 
-import Form1 from './components/Selectors.jsx';
-
-import { SChartType, SActiveSchoolZoneFlag, SAtIntersection, SCrashDeathCount, SConstructionZoneFlag, SStopSignFlag, SYieldSignFlag, STrafficControlType, SDayOfWeek, SCrashInjuryCount, SCrashTime, SCrashDate } from './components/QuerySelectors.jsx';
+import { SChartType, SActiveSchoolZoneFlag, SAtIntersection, SCrashDeathCount, SConstructionZoneFlag, SStopSignFlag, SYieldSignFlag, STrafficControlType, SDayOfWeek, SCrashInjuryCount, SCrashTime, SCrashDate, SUnitDeathCount, SVehicleModelName, SVehicleMake, SUnitNotInjuredCount, SUnitTotalInjuredCount, SVehicleModelYear, SContributingFactor1, SContributingFactor2, SContributingFactor3, SCommercialVehicleType, SUnitDescription, SCitation, SDied, SAge, SEthnicity, SGender, SNotInjured } from './components/QuerySelectors.jsx';
 
 class Query4Manager extends React.Component {
 	constructor() {
@@ -26,6 +24,7 @@ class Query4Manager extends React.Component {
 			ins = ( <Data4 chartType={a} filters={b} /> );
 		}
 		
+		//TODO: change how state is handled (use setState!)
 		return (
 			<div className="queryContainer">
 				<div className="chartContainer">
@@ -46,6 +45,24 @@ class Query4Manager extends React.Component {
 					<SCrashInjuryCount handleChange={(value) => { this.state.filters.ctic = value }} />
 					<SCrashTime handleChange={(value) => { this.state.filters.ct = value }} /> 
 					<SCrashDate handleChange={(value) => { this.state.filters.cd = value }} /> 
+					<SUnitDeathCount handleChange={(value) => { this.state.filters.udc = value }} /> 
+					<SVehicleModelName handleChange={(value) => { this.state.filters.vmn = value }} /> 
+					<SVehicleMake handleChange={(value) => { this.state.filters.vm = value }} /> 
+					<SUnitNotInjuredCount handleChange={(value) => { this.state.filters.unic = value }} /> 
+					<SUnitTotalInjuredCount handleChange={(value) => { this.state.filters.utic = value }} /> 
+					<SVehicleModelYear handleChange={(value) => { this.state.filters.vmy = value }} /> 
+					<SContributingFactor1 handleChange={(value) => { this.state.filters.cf1 = value }} /> 
+					<SContributingFactor2 handleChange={(value) => { this.state.filters.cf2 = value }} /> 
+					<SContributingFactor3 handleChange={(value) => { this.state.filters.cf3 = value }} /> 
+					<SCommercialVehicleType handleChange={(value) => { this.state.filters.cvt = value }} /> 
+					<SUnitDescription handleChange={(value) => { this.state.filters.ud = value }} /> 
+					<SCitation handleChange={(value) => { this.state.filters.c = value }} /> 
+					<SDied handleChange={(value) => { this.state.filters.d = value }} /> 
+					<SAge handleChange={(value) => { this.state.filters.a = value }} /> 
+					<SEthnicity handleChange={(value) => { this.state.filters.e = value }} /> 
+					<SGender handleChange={(value) => { this.state.filters.g = value }} /> 
+					<SNotInjured handleChange={(value) => { this.state.filters.ni = value }} /> 
+					
 					<button onClick={ () => {
 						this.setState({firstLoad: false});
 						this.render();
