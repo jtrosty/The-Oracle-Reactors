@@ -7,15 +7,47 @@ class Data4 extends React.Component {
 
   constructor(props) {
     super();
+	
+	var attr = "";
+	var op = "";
+	var val = "";
+	
+	for(let p in props.filters) {
+		if(props.filters[p] == "DNF" || props.filters[p] == "-1" || props.filters[p] == "-1 (Don't Filter)" || (p.length >= 2 && p.slice(-2) == "op") || p == "chartType" || p == "firstLoad")
+		{
+			continue;
+		}
+		
+		var localval = props.filters[p];
+		var localattr = p;
+		var localop = null;
+		
+		if(props.filters[localattr + "op"] != undefined) {
+			localop = props.filters[localattr + "op"];
+		}
+		else {
+			localop = "=";
+		}
+		
+		attr += localattr + "|";
+		op += localop + "|";
+		val += localval + "|";
+	}
+	
     this.state = {
       data: undefined,
 	  chartType: props.chartType,
-	  filters: props.filters
+	  attrFilters: attr,
+	  opFilters: op,
+	  valFilters: val
     }
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/getQuery4')
+	var a = this.state.attrFilters;
+	var b = this.state.opFilters;
+	var c = this.state.valFilters;
+    axios.get('http://localhost:5000/getQuery4', {params: {attr: a, op: b, val: c}})
       .then((response) => {
         console.log(response.data.rows); //Debug information
         if(response.data.rows === undefined)

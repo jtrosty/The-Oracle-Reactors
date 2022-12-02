@@ -52,7 +52,13 @@ export function SAtIntersection (props) {
 export function SCrashDeathCount (props) {
   return(
 	<div className="inlineOption">
-		<p>Crash Total Death Count =</p>
+		<p>Crash Total Death Count</p>
+		<Select
+			defaultValue="="
+			onChange={props.handleOpChange}
+			options={[{label: "=", value: "="}, {label: ">", value: ">"}, {label: ">=", value: ">="}, {label: "<", value: "<"}, {label: "<=", value: "<="}, {label: "!=", value: "<>"}]}
+			size = "large"
+		/>
         <Input
         placeholder="-1 (Don't Filter)" 
         onChange={props.handleChange} 
@@ -139,7 +145,13 @@ export function SDayOfWeek (props) {
 export function SCrashInjuryCount (props) {
   return(
 	<div className="inlineOption">
-		<p>Crash Total Injury Count =</p>
+		<p>Crash Total Injury Count</p>
+		<Select
+			defaultValue="="
+			onChange={props.handleOpChange}
+			options={[{label: "=", value: "="}, {label: ">", value: ">"}, {label: ">=", value: ">="}, {label: "<", value: "<"}, {label: "<=", value: "<="}, {label: "!=", value: "<>"}]}
+			size = "large"
+		/>
         <Input
         placeholder="-1 (Don't Filter)" 
         onChange={props.handleChange} 
@@ -149,34 +161,38 @@ export function SCrashInjuryCount (props) {
   );
 }
 
-export function SCrashTime() {
-    const[times,setTimes] = useState([]);
-
+export function SCrashTime(props) {
     return (
 		<div className="inlineOption">
-			<p>Select Crash Time: </p>
+			<p>Select Crash Time Range (HH:MM:SS): </p>
 			<TimePicker 
-				onChange={(value) =>{
-					setTimes(value.map(item =>{
-						return moment(item).format('HH:mm:ss');
-					}))
+				onChange={(values) => {
+					props.handleChange1(moment(values).format('HH:mm:ss'));
+				}}
+			/>
+			<p>-</p>
+			<TimePicker 
+				onChange={(values) => {
+					props.handleChange2(moment(values).format('HH:mm:ss'));
 				}}
 			/>
 		</div>
     );
 }
 
-export function SCrashDate() {
-  const [dates, setDates] = useState([])
-
+export function SCrashDate(props) {
   return (
 	<div className="inlineOption">
 		<p>Select Crash Date: </p>
 		<DatePicker
 			onChange={(values) => {
-				setDates(values.map(item=>{
-					return  moment(item).format('YYYY-DD-MM')
-				}))
+				props.handleChange1(moment(values).format('YYYY-DD-MM'));
+			}}
+		/>
+		<p>-</p>
+		<DatePicker
+			onChange={(values) => {
+				props.handleChange2(moment(values).format('YYYY-DD-MM'));
 			}}
 		/>
 	</div>
@@ -186,7 +202,13 @@ export function SCrashDate() {
 export function SUnitDeathCount (props) {
   return(
 	<div className="inlineOption">
-		<p>Unit Death Count =</p>
+		<p>Unit Death Count</p>
+		<Select
+			defaultValue="="
+			onChange={props.handleOpChange}
+			options={[{label: "=", value: "="}, {label: ">", value: ">"}, {label: ">=", value: ">="}, {label: "<", value: "<"}, {label: "<=", value: "<="}, {label: "!=", value: "<>"}]}
+			size = "large"
+		/>
         <Input
         placeholder="-1 (Don't Filter)" 
         onChange={props.handleChange} 
@@ -235,7 +257,13 @@ export function SVehicleMake(props) {
 export function SUnitNotInjuredCount (props) {
   return(
 	<div className="inlineOption">
-		<p>Unit Not Injured Count =</p>
+		<p>Unit Not Injured Count</p>
+		<Select
+			defaultValue="="
+			onChange={props.handleOpChange}
+			options={[{label: "=", value: "="}, {label: ">", value: ">"}, {label: ">=", value: ">="}, {label: "<", value: "<"}, {label: "<=", value: "<="}, {label: "!=", value: "<>"}]}
+			size = "large"
+		/>
         <Input
         placeholder="-1 (Don't Filter)" 
         onChange={props.handleChange} 
@@ -248,7 +276,13 @@ export function SUnitNotInjuredCount (props) {
 export function SUnitTotalInjuredCount (props) {
   return(
 	<div className="inlineOption">
-		<p>Unit Total Injured Count =</p>
+		<p>Unit Total Injured Count</p>
+		<Select
+			defaultValue="="
+			onChange={props.handleOpChange}
+			options={[{label: "=", value: "="}, {label: ">", value: ">"}, {label: ">=", value: ">="}, {label: "<", value: "<"}, {label: "<=", value: "<="}, {label: "!=", value: "<>"}]}
+			size = "large"
+		/>
         <Input
         placeholder="-1 (Don't Filter)" 
         onChange={props.handleChange} 
@@ -393,7 +427,13 @@ export function SDied (props) {
 export function SAge (props) {
   return(
 	<div className="inlineOption">
-		<p>Person Age =</p>
+		<p>Person Age</p>
+		<Select
+			defaultValue="="
+			onChange={props.handleOpChange}
+			options={[{label: "=", value: "="}, {label: ">", value: ">"}, {label: ">=", value: ">="}, {label: "<", value: "<"}, {label: "<=", value: "<="}, {label: "!=", value: "<>"}]}
+			size = "large"
+		/>
         <Input
         placeholder="-1 (Don't Filter)" 
         onChange={props.handleChange} 
