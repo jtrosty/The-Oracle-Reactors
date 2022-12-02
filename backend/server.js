@@ -136,6 +136,8 @@ app.get('/getQuery3', async (req, res) => {
 
 //Query 4
 app.get('/getQuery4', async (req, res) => {
+  console.log(req.query);
+	
   async function fetchQuery4() {
     try {
       const connection = await oracledb.getConnection();

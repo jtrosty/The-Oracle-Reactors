@@ -251,3 +251,11 @@
 .inlineOption p {
 	padding-right: 1em;
 }
+
+.inlineOption .ant-select {
+	margin-right: 1em;
+}
+
+.inlineOption .ant-picker {
+	margin-right: 1em;
+}
