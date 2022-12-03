@@ -183,7 +183,7 @@ export function SCrashTime(props) {
 export function SCrashDate(props) {
   return (
 	<div className="inlineOption">
-		<p>Select Crash Date: </p>
+		<p>Select Crash Date Range: </p>
 		<DatePicker
 			onChange={(values) => {
 				props.handleChange1(moment(values).format('YYYY-DD-MM'));

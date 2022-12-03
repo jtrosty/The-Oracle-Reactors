@@ -13,7 +13,7 @@ class Data4 extends React.Component {
 	var val = "";
 	
 	for(let p in props.filters) {
-		if(props.filters[p] == "DNF" || props.filters[p] == "-1" || props.filters[p] == "-1 (Don't Filter)" || (p.length >= 2 && p.slice(-2) == "op") || p == "chartType" || p == "firstLoad")
+		if(props.filters[p] == "" || props.filters[p] == "DNF" || props.filters[p] == "-1" || props.filters[p] == "-1 (Don't Filter)" || (p.length >= 2 && p.slice(-2) == "op") || p == "chartType" || p == "firstLoad")
 		{
 			continue;
 		}
@@ -26,7 +26,15 @@ class Data4 extends React.Component {
 			localop = props.filters[localattr + "op"];
 		}
 		else {
-			localop = "=";
+			if(localattr == "ct1" || localattr == "cd1") {
+				localop = ">=";
+			}
+			else if(localattr == "ct2" || localattr == "cd2") {
+				localop = "<="
+			}
+			else {
+				localop = "=";
+			}
 		}
 		
 		attr += localattr + "|";
@@ -49,7 +57,7 @@ class Data4 extends React.Component {
 	var c = this.state.valFilters;
     axios.get('http://localhost:5000/getQuery4', {params: {attr: a, op: b, val: c}})
       .then((response) => {
-        console.log(response.data.rows); //Debug information
+        //console.log(response.data.rows); //Debug information
         if(response.data.rows === undefined)
 		{
 			this.componentDidMount()
