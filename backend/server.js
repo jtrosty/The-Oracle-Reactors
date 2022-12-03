@@ -157,8 +157,6 @@ app.get('/getQuery4', async (req, res) => {
       sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
     }
   }
-  console.log(sqlStrings);
-	
   async function fetchQuery4() {
 
     try {
