@@ -13,6 +13,16 @@ app.listen(PORT, ()=>{console.log(`listen to port ${PORT}`);})
 
 database_initialized = false
 
+const attrToAttribute = {aszf: "Active_School_Zone_Flag",   ai: "At_Intersection",              cdc: "Crash_Death_Count", 
+                        czf: "Construction_Zone_Flag",      ssf: "Stop_Sign_Flag",              ysf: "Yield_Sign_Flag",         tct: "Traffic_Control_Type",
+	                      dow: "Day_Of_Week",                 ctic: "Crash_Total_Injury_Count",   ct1: "Crash_Time",              ct2: "Crash_Time", 
+                        cd1: "Crash_Date",                  cd2: "Crash_Date",                  udc: "Death_Count",             vmn: "Vehicle_Model_Name", 
+                        vm: "Vehicle_Make",                 unic: "Not_Injured_Count",          utic: "Total_Injury_Count",     vmy: "Vehicle_Model_Year", 
+                        cf1: "Contributing_Factor_1",       cf2: "Contributing_Factor_2",       cf3: "Contributing_Factor_3",   cvt: "CMV_Vehicle_Type", 
+                        ud: "Description",                  c: "Citation",                      d: "Died",                      e: "Ethnicity", 
+                        g: "Gender",                        a: "Age",                           ni: "Not_Injured"};
+
+
 //Connection Management
 async function init_database() {
 	try {
@@ -137,27 +147,53 @@ app.get('/getQuery3', async (req, res) => {
 //Query 4
 app.get('/getQuery4', async (req, res) => {
   console.log(req.query);
+  const attribute = req.query.attr.split("|")
+  const op = req.query.op.split("|")
+  const val = req.query.val.split("|")
+  let sqlStrings = [];
+
+  for (let i = 0; i < attribute.length - 1; i++) {
+    let temp = attrToAttribute[attribute[i]]
+    if (temp != null && temp.length > 0) {
+      sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
+    }
+  }
 	
   async function fetchQuery4() {
+
     try {
+
       const connection = await oracledb.getConnection();
 
       oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-      const result = await connection.execute(`
-	  SELECT 
-		TO_CHAR(TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96, 'HH24::MI::SS')
-		AS CRASH_TIME,
-		AVG(TOTAL_INJURY_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100 
-		AS PercentInjury, 
-		AVG(DEATH_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100
-		AS PercentDeath
-		FROM "DYLANTOSH".Unit U
-		JOIN "CWOJTAK".Crash C ON C.CRASH_ID = U.CRASH_ID
-		WHERE TOTAL_INJURY_COUNT + NOT_INJURED_COUNT <> 0
-		GROUP BY
-			TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96
-		ORDER BY CRASH_TIME ASC
-	  `)
+
+      let filters = sqlStrings.join(' AND ')
+      filters = ` AND ${filters}`
+      
+
+    const string = `Select ${sqlStrings[0]} from ${sqlStrings[1]} Where ${sqlStrings[2]} AND ${sqlStrings[3]}]`
+
+  console.log(filters)
+    const query = 
+      `SELECT 
+      TO_CHAR(TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96, 'HH24::MI::SS')
+      AS CRASH_TIME,
+      AVG(TOTAL_INJURY_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100 
+      AS PercentInjury, 
+      AVG(DEATH_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100
+      AS PercentDeath
+      FROM "DYLANTOSH".Unit U
+      JOIN "CWOJTAK".Crash C ON C.CRASH_ID = U.CRASH_ID
+      WHERE TOTAL_INJURY_COUNT + NOT_INJURED_COUNT <> 0 
+      ${filters}
+      GROUP BY
+        TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96
+      ORDER BY CRASH_TIME ASC
+      `
+
+      console.log(query)
+
+    const result = await connection.execute(query)
 	  console.log("Completed request");
 	  
 	  try {
