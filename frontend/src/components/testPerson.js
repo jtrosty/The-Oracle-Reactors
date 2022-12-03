@@ -1,4 +1,3 @@
-/*
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { createBrowserRouter } from 'react-router-dom';
@@ -34,7 +33,6 @@ export default Test;
 
 
 export default () => {
-    const [personData, setPersonData] = useState('');
     const url = 'http://localhost:5000'
     const data = null;
     axios.get(`${url}/getPerson`)
