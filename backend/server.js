@@ -146,7 +146,6 @@ app.get('/getQuery3', async (req, res) => {
 
 //Query 4
 app.get('/getQuery4', async (req, res) => {
-  console.log(req.query);
   const attribute = req.query.attr.split("|")
   const op = req.query.op.split("|")
   const val = req.query.val.split("|")
@@ -158,7 +157,6 @@ app.get('/getQuery4', async (req, res) => {
       sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
     }
   }
-  
   async function fetchQuery4() {
 
     try {
@@ -166,14 +164,15 @@ app.get('/getQuery4', async (req, res) => {
       const connection = await oracledb.getConnection();
 
       oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+    console.log("Printing filters 1")
 
       let filters = sqlStrings.join(' AND ')
-      filters = ` AND ${filters}`
-      
+      if (sqlStrings.length > 0) {
+        filters = ` AND ${filters}`
+      }
 
-    const string = `Select ${sqlStrings[0]} from ${sqlStrings[1]} Where ${sqlStrings[2]} AND ${sqlStrings[3]}]`
-
-  console.log(filters)
+    console.log("Printing filters")
+    console.log(filters)
     const query = 
       `SELECT 
       TO_CHAR(TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96, 'HH24::MI::SS')
@@ -194,6 +193,7 @@ app.get('/getQuery4', async (req, res) => {
       console.log(query)
 
     const result = await connection.execute(query)
+    console.log(result);
 	  console.log("Completed request");
 	  
 	  try {
@@ -202,12 +202,15 @@ app.get('/getQuery4', async (req, res) => {
 	  catch (err) {
 		console.log("Encountered an error closing a connection in the connection pool.");
 	  }
+      console.log(result);
 	  
       return result;
     } 
     catch(error) {
       return error;
     }
+
+    /*
 	finally {
 		if (connection) {
 			try {
@@ -217,7 +220,8 @@ app.get('/getQuery4', async (req, res) => {
 				console.log("Encountered an error closing a connection in the connection pool.");
 			}
 		}
-	}
+    }
+    */
   }
 
   fetchQuery4()
