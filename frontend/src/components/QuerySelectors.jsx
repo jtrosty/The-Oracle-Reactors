@@ -3,7 +3,6 @@ import 'antd/dist/antd.css';
 import { Select, Input } from 'antd';
 import { DatePicker } from 'antd';
 import { TimePicker } from 'antd';
-import { useState } from 'react';
 import moment from 'moment';
 
 
@@ -29,7 +28,7 @@ export function SActiveSchoolZoneFlag (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
@@ -43,7 +42,7 @@ export function SAtIntersection (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
@@ -76,7 +75,7 @@ export function SConstructionZoneFlag (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
@@ -90,7 +89,7 @@ export function SStopSignFlag (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
@@ -104,7 +103,7 @@ export function SYieldSignFlag (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
@@ -136,7 +135,7 @@ export function SDayOfWeek (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Monday", value: "Mon"}, {label: "Tuesday", value: "Tue"}, {label: "Wednesday", value: "Wed"}, {label: "Thursday", value: "Thu"}, {label: "Friday", value: "Fri"}, {label: "Saturday", value: "Sat"}, {label: "Sunday", value: "Sun"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Monday", value: "\'MON\'"}, {label: "Tuesday", value: "\'TUE\'"}, {label: "Wednesday", value: "\'WED\'"}, {label: "Thursday", value: "\'THU\'"}, {label: "Friday", value: "\'FRI\'"}, {label: "Saturday", value: "\'SAT\'"}, {label: "Sunday", value: "\'SUN\'"}]}
 		/>
 	</div>
   );
@@ -404,7 +403,7 @@ export function SCitation (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
@@ -418,7 +417,7 @@ export function SDied (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
@@ -483,8 +482,44 @@ export function SNotInjured (props) {
 		  defaultValue="Don't Filter"
 		  style={{ width: 300 }}
 		  onChange={props.handleChange}
-		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "Y"}, {label: "No", value: "N"}]}
+		  options={[{label: "Don't Filter", value: "DNF"}, {label: "Yes", value: "\'Y\'"}, {label: "No", value: "\'N\'"}]}
 		/>
 	</div>
   );
 }
+
+/*
+Usage
+
+<h3>Options</h3>
+<SChartType handleChange={(value) => { this.setState({chartType: value }) }} />
+<h3>Filters</h3>
+<SActiveSchoolZoneFlag handleChange={(value) => { this.setState({aszf: value}) }} />
+<SAtIntersection handleChange={(value) => { this.setState({ai: value}) }} />
+<SCrashDeathCount handleChange={(value) => { this.setState({cdc: value.target.value}) }} handleOpChange={(value) => { this.setState({cdcop: value}) }} />
+<SConstructionZoneFlag handleChange={(value) => { this.setState({czf: value}) }} /> 
+<SStopSignFlag handleChange={(value) => { this.setState({ssf: value}) }} />
+<SYieldSignFlag handleChange={(value) => { this.setState({ysf: value}) }} /> 
+<STrafficControlType handleChange={(value) => { this.setState({tct: value}) }} /> 
+<SDayOfWeek handleChange={(value) => { this.setState({dow: value}) }} />
+<SCrashInjuryCount handleChange={(value) => { this.setState({ctic: value.target.value}) }} handleOpChange={(value) => { this.setState({cticop: value}) }} />
+<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
+<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 
+<SUnitDeathCount handleChange={(value) => { this.setState({udc: value.target.value}) }} handleOpChange={(value) => { this.setState({udcop: value}) }} /> 
+<SVehicleModelName handleChange={(value) => { this.setState({vmn: value}) }} /> 
+<SVehicleMake handleChange={(value) => { this.setState({vm: value}) }} /> 
+<SUnitNotInjuredCount handleChange={(value) => { this.setState({unic: value.target.value}) }} handleOpChange={(value) => { this.setState({udicop: value}) }} /> 
+<SUnitTotalInjuredCount handleChange={(value) => { this.setState({utic: value.target.value}) }} handleOpChange={(value) => { this.setState({uticop: value}) }} /> 
+<SVehicleModelYear handleChange={(value) => { this.setState({vmy: value}) }} /> 
+<SContributingFactor1 handleChange={(value) => { this.setState({cf1: value}) }} /> 
+<SContributingFactor2 handleChange={(value) => { this.setState({cf2: value}) }} /> 
+<SContributingFactor3 handleChange={(value) => { this.setState({cf3: value}) }} /> 
+<SCommercialVehicleType handleChange={(value) => { this.setState({cvt: value}) }} /> 
+<SUnitDescription handleChange={(value) => { this.setState({ud: value}) }} /> 
+<SCitation handleChange={(value) => { this.setState({c: value}) }} /> 
+<SDied handleChange={(value) => { this.setState({d: value}) }} /> 
+<SAge handleChange={(value) => { this.setState({a: value.target.value}) }} handleOpChange={(value) => { this.setState({aop: value}) }} /> 
+<SEthnicity handleChange={(value) => { this.setState({e: value}) }} /> 
+<SGender handleChange={(value) => { this.setState({g: value}) }} /> 
+<SNotInjured handleChange={(value) => { this.setState({ni: value}) }} /> 
+*/

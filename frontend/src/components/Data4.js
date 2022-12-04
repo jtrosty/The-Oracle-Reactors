@@ -8,53 +8,15 @@ class Data4 extends React.Component {
   constructor(props) {
     super();
 	
-	var attr = "";
-	var op = "";
-	var val = "";
-	
-	for(let p in props.filters) {
-		if(props.filters[p] == "" || props.filters[p] == "DNF" || props.filters[p] == "-1" || props.filters[p] == "-1 (Don't Filter)" || (p.length >= 2 && p.slice(-2) == "op") || p == "chartType" || p == "firstLoad")
-		{
-			continue;
-		}
-		
-		var localval = props.filters[p];
-		var localattr = p;
-		var localop = null;
-		
-		if(props.filters[localattr + "op"] != undefined) {
-			localop = props.filters[localattr + "op"];
-		}
-		else {
-			if(localattr == "ct1" || localattr == "cd1") {
-				localop = ">=";
-			}
-			else if(localattr == "ct2" || localattr == "cd2") {
-				localop = "<="
-			}
-			else {
-				localop = "=";
-			}
-		}
-		
-		attr += localattr + "|";
-		op += localop + "|";
-		val += localval + "|";
-	}
-	
     this.state = {
-      data: undefined,
-	  chartType: props.chartType,
-	  attrFilters: attr,
-	  opFilters: op,
-	  valFilters: val
+      data: undefined
     }
   }
 
   componentDidMount() {
-	var a = this.state.attrFilters;
-	var b = this.state.opFilters;
-	var c = this.state.valFilters;
+	var a = this.props.attrFilters;
+	var b = this.props.opFilters;
+	var c = this.props.valFilters;
     axios.get('http://localhost:5000/getQuery4', {params: {attr: a, op: b, val: c}})
       .then((response) => {
         //console.log(response.data.rows); //Debug information
@@ -66,8 +28,28 @@ class Data4 extends React.Component {
 		this.setState({
             data: response.data.rows
         });
-		this.render();
       });
+  }
+  
+  componentDidUpdate(prevProps) {
+	if(prevProps.attrFilters !== this.props.attrFilters || prevProps.opFilters !== this.props.opFilters || prevProps.valFilters !== this.props.valFilters) {
+		this.setState({data: undefined})
+		var a = this.props.attrFilters;
+		var b = this.props.opFilters;
+		var c = this.props.valFilters;
+		axios.get('http://localhost:5000/getQuery4', {params: {attr: a, op: b, val: c}})
+		  .then((response) => {
+			//console.log(response.data.rows); //Debug information
+			if(response.data.rows === undefined)
+			{
+				this.componentDidMount()
+				return;
+			}
+			this.setState({
+				data: response.data.rows
+			});
+		  });
+	}
   }
   
   render() {
@@ -77,10 +59,12 @@ class Data4 extends React.Component {
 		return ( <p>Loading chart; please wait...</p> );
 	}
 
-	var ct = this.state.chartType;
+	var ct = this.props.chartType;
+
+	console.log(this.props);
 
     return (
-		<Chart4 data4={ret} inType={ct} />
+		<Chart4 data4={ret} inType={ct} key={this.props.attrFilters} key2={this.props.opFilters} key3={this.props.valFilters} key4={this.props.chartType} />
     );
   }
 }

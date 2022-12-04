@@ -233,6 +233,7 @@
 
 .queryContainer {
 	width: 95%;
+	padding-top: 5px;
 }
 
 .chartContainer {
@@ -241,6 +242,10 @@
 	border-color: white;
 	border-style: solid;
 	padding: 15px;
+}
+
+.optionContainer {
+	padding-bottom: 1em;
 }
 
 .inlineOption {
