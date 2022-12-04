@@ -104,9 +104,9 @@ app.get('/getQuery1', async (req, res) => {
 		const result = await connection.execute(query)
 		console.log("Completed request");
 	  
-	    try {
+	  try {
 			await connection.close();
-	    }
+	  }
 		catch (err) {
 			console.log("Encountered an error closing a connection in the connection pool.");
 		}
@@ -173,9 +173,9 @@ app.get('/getQuery2', async (req, res) => {
 		const result = await connection.execute(query)
 		console.log("Completed request");
 	  
-	    try {
+	  try {
 			await connection.close();
-	    }
+	  }
 		catch (err) {
 			console.log("Encountered an error closing a connection in the connection pool.");
 		}
@@ -245,9 +245,9 @@ app.get('/getQuery3', async (req, res) => {
 		const result = await connection.execute(query)
 		console.log("Completed request");
 	  
-	    try {
+	  try {
 			await connection.close();
-	    }
+	  }
 		catch (err) {
 			console.log("Encountered an error closing a connection in the connection pool.");
 		}
@@ -315,13 +315,12 @@ app.get('/getQuery4', async (req, res) => {
 		const result = await connection.execute(query)
 		console.log("Completed request");
 	  
-	    try {
+	  try {
 			await connection.close();
-	    }
+	  }
 		catch (err) {
 			console.log("Encountered an error closing a connection in the connection pool.");
 		}
-	  
       return result;
     } 
     catch(error) {
@@ -380,7 +379,7 @@ app.get('/getQuery5', async (req, res) => {
 		const result = await connection.execute(query)
 		console.log("Completed request");
 	  
-	    try {
+	  try {
 			await connection.close();
 	    }
 		catch (err) {
