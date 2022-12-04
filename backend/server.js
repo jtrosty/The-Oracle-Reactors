@@ -53,100 +53,9 @@ async function deinit_database() {
 }
 //End Connection Management
 
-/*
-//TODO - Replace placeholder queries with actual ones
 
 //Query 1
 app.get('/getQuery1', async (req, res) => {
-  async function fetchPerson() {
-    try {
-      const connection = await oracledb.getConnection({ 
-        user: process.env.USER_NAME, 
-        password: process.env.DB_PASSWORD, 
-        connectionString: process.env.DB_URL 
-      });
-
-      oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-      const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
-      return result;
-
-    } 
-    catch(error) {
-      return error;
-    }
-  }
-
-  fetchPerson()
-  .then(dbRes =>{
-    res.send(dbRes);
-  })
-  .catch(err =>{
-    res.send(err);
-  })
-})
-
-//Query 2
-app.get('/getQuery2', async (req, res) => {
-  async function fetchPerson() {
-    try {
-      const connection = await oracledb.getConnection({ 
-        user: process.env.USER_NAME, 
-        password: process.env.DB_PASSWORD, 
-        connectionString: process.env.DB_URL 
-      });
-
-      oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-      const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
-      return result;
-
-    } 
-    catch(error) {
-      return error;
-    }
-  }
-
-  fetchPerson()
-  .then(dbRes =>{
-    res.send(dbRes);
-  })
-  .catch(err =>{
-    res.send(err);
-  })
-})
-*/
-
-//Query 3
-app.get('/getQuery3', async (req, res) => {
-    async function fetchQuery3() {
-      try {
-        const connection = await oracledb.getConnection({ 
-          user: process.env.USER_NAME, 
-          password: process.env.DB_PASSWORD, 
-          connectionString: process.env.DB_URL 
-        });
-
-        oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-        const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
-        return result;
-
-      } 
-      catch(error) {
-        return error;
-      }
-    }
-
-    fetchQuery3()
-    .then(dbRes =>{
-      res.send(dbRes);
-    })
-    .catch(err =>{
-      res.send(err);
-    })
-})
-
-//Query 4
-app.get('/getQuery4', async (req, res) => {
-  console.log(req.query);
   const attribute = req.query.attr.split("|")
   const op = req.query.op.split("|")
   const val = req.query.val.split("|")
@@ -158,66 +67,266 @@ app.get('/getQuery4', async (req, res) => {
       sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
     }
   }
-  
-  async function fetchQuery4() {
-
+  async function fetchQuery1() {
     try {
+		const connection = await oracledb.getConnection();
 
-      const connection = await oracledb.getConnection();
+		oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
 
-      oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+		let filters = sqlStrings.join(' AND ')
+		if (sqlStrings.length > 0) {
+			filters = ` AND ${filters}`
+		}
 
-      let filters = sqlStrings.join(' AND ')
-      filters = ` AND ${filters}`
-      
+		const query = 
+		  `SELECT CONTRIBUTING_FACTOR_1, CRASH_YEAR, 
+			COUNT("CWOJTAK".Crash.CRASH_ID) / 
+				(SELECT COUNT(CRASH_ID) FROM "CWOJTAK".Crash) * 100
+			FROM "CWOJTAK".Crash
+			JOIN "DYLANTOSH".Unit ON 
+				"CWOJTAK".Crash.CRASH_ID = "DYLANTOSH".Unit.CRASH_ID
+			WHERE CONTRIBUTING_FACTOR_1 IN
+				(SELECT CONTRIBUTING_FACTOR_1 
+					FROM "CWOJTAK".Crash
+					JOIN "DYLANTOSH".Unit ON 
+						"CWOJTAK".Crash.CRASH_ID = "DYLANTOSH".Unit.CRASH_ID
+					WHERE CONTRIBUTING_FACTOR_1 IS NOT NULL
+					${filters}
+					GROUP BY CONTRIBUTING_FACTOR_1
+					ORDER BY COUNT("CWOJTAK".Crash.CRASH_ID) DESC
+					FETCH FIRST 6 ROWS ONLY)
+			${filters}
+			GROUP BY CONTRIBUTING_FACTOR_1, CRASH_YEAR
+			ORDER BY CONTRIBUTING_FACTOR_1 ASC, CRASH_YEAR ASC
+		  `
 
-    const string = `Select ${sqlStrings[0]} from ${sqlStrings[1]} Where ${sqlStrings[2]} AND ${sqlStrings[3]}]`
 
-  console.log(filters)
-    const query = 
-      `SELECT 
-      TO_CHAR(TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96, 'HH24::MI::SS')
-      AS CRASH_TIME,
-      AVG(TOTAL_INJURY_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100 
-      AS PercentInjury, 
-      AVG(DEATH_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT)) * 100
-      AS PercentDeath
-      FROM "DYLANTOSH".Unit U
-      JOIN "CWOJTAK".Crash C ON C.CRASH_ID = U.CRASH_ID
-      WHERE TOTAL_INJURY_COUNT + NOT_INJURED_COUNT <> 0 
-      ${filters}
-      GROUP BY
-        TRUNC(CRASH_TIME) + FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96
-      ORDER BY CRASH_TIME ASC
-      `
-
-      console.log(query)
-
-    const result = await connection.execute(query)
-	  console.log("Completed request");
+		const result = await connection.execute(query)
+		console.log("Completed request");
 	  
-	  try {
-		await connection.close();
-	  }
-	  catch (err) {
-		console.log("Encountered an error closing a connection in the connection pool.");
-	  }
+	    try {
+			await connection.close();
+	    }
+		catch (err) {
+			console.log("Encountered an error closing a connection in the connection pool.");
+		}
 	  
       return result;
     } 
     catch(error) {
       return error;
     }
-	finally {
-		if (connection) {
-			try {
-				await connection.close();
-			}
-			catch (err) {
-				console.log("Encountered an error closing a connection in the connection pool.");
-			}
+  }
+
+  fetchQuery1()
+  .then(dbRes =>{
+    res.send(dbRes);
+  })
+  .catch(err =>{
+    res.send(err);
+  })
+})
+
+//Query 2
+app.get('/getQuery2', async (req, res) => {
+  const attribute = req.query.attr.split("|")
+  const op = req.query.op.split("|")
+  const val = req.query.val.split("|")
+  let sqlStrings = [];
+
+  for (let i = 0; i < attribute.length - 1; i++) {
+    let temp = attrToAttribute[attribute[i]]
+    if (temp != null && temp.length > 0) {
+      sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
+    }
+  }
+  async function fetchQuery2() {
+    try {
+		const connection = await oracledb.getConnection();
+
+		oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+
+		let filters = sqlStrings.join(' AND ')
+		if (sqlStrings.length > 0) {
+			filters = ` AND ${filters}`
 		}
-	}
+
+		const query = 
+		  `SELECT DISTINCT VEHICLE_MAKE, VEHICLE_MODEL_NAME, CRASH_YEAR, AVG(DEATH_COUNT) 
+			FROM "DYLANTOSH".Unit
+			JOIN "CWOJTAK".Crash ON "CWOJTAK".Crash.CRASH_ID = "DYLANTOSH".Unit.CRASH_ID
+			WHERE (VEHICLE_MAKE, VEHICLE_MODEL_NAME) IN 
+				(SELECT VEHICLE_MAKE, VEHICLE_MODEL_NAME
+					FROM "DYLANTOSH".Unit
+					WHERE VEHICLE_MAKE IS NOT NULL AND VEHICLE_MODEL_NAME IS NOT NULL
+					${filters}
+					GROUP BY VEHICLE_MAKE, VEHICLE_MODEL_NAME
+					HAVING COUNT(*) > 12000
+					ORDER BY AVG(DEATH_COUNT) DESC
+					FETCH FIRST 5 ROWS ONLY)
+			${filters}
+			GROUP BY VEHICLE_MAKE, VEHICLE_MODEL_NAME, CRASH_YEAR
+			ORDER BY VEHICLE_MAKE ASC, VEHICLE_MODEL_NAME ASC, CRASH_YEAR ASC
+		  `
+
+
+		const result = await connection.execute(query)
+		console.log("Completed request");
+	  
+	    try {
+			await connection.close();
+	    }
+		catch (err) {
+			console.log("Encountered an error closing a connection in the connection pool.");
+		}
+	  
+      return result;
+    } 
+    catch(error) {
+      return error;
+    }
+  }
+
+  fetchQuery2()
+  .then(dbRes =>{
+    res.send(dbRes);
+  })
+  .catch(err =>{
+    res.send(err);
+  })
+})
+
+//Query 3
+app.get('/getQuery3', async (req, res) => {
+  const attribute = req.query.attr.split("|")
+  const op = req.query.op.split("|")
+  const val = req.query.val.split("|")
+  let sqlStrings = [];
+
+  for (let i = 0; i < attribute.length - 1; i++) {
+    let temp = attrToAttribute[attribute[i]]
+    if (temp != null && temp.length > 0) {
+      sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
+    }
+  }
+  async function fetchQuery3() {
+    try {
+		const connection = await oracledb.getConnection();
+
+		oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+
+		let filters = sqlStrings.join(' AND ')
+		if (sqlStrings.length > 0) {
+			filters = ` AND ${filters}`
+		}
+
+		const query = 
+		  `SELECT TRAFFIC_CONTROL_TYPE, CRASH_YEAR, 
+			AVG(CRASH_TOTAL_INJURY_COUNT)
+			FROM "CWOJTAK".Crash C
+			WHERE EXISTS
+				(SELECT 1 FROM "DYLANTOSH".Unit U
+					WHERE C.CRASH_ID = U.CRASH_ID
+					AND U.CMV_VEHICLE_TYPE IS NOT NULL)
+				AND TRAFFIC_CONTROL_TYPE IN
+				(SELECT TRAFFIC_CONTROL_TYPE
+					FROM "CWOJTAK".Crash
+					WHERE TRAFFIC_CONTROL_TYPE IS NOT NULL
+					${filters}
+					GROUP BY TRAFFIC_CONTROL_TYPE
+					ORDER BY COUNT("CWOJTAK".Crash.CRASH_ID) DESC
+					FETCH FIRST 5 ROWS ONLY)
+			${filters}
+			GROUP BY TRAFFIC_CONTROL_TYPE, CRASH_YEAR
+			ORDER BY TRAFFIC_CONTROL_TYPE ASC, CRASH_YEAR ASC
+		  `
+
+
+		const result = await connection.execute(query)
+		console.log("Completed request");
+	  
+	    try {
+			await connection.close();
+	    }
+		catch (err) {
+			console.log("Encountered an error closing a connection in the connection pool.");
+		}
+	  
+      return result;
+    } 
+    catch(error) {
+      return error;
+    }
+  }
+
+  fetchQuery3()
+  .then(dbRes =>{
+    res.send(dbRes);
+  })
+  .catch(err =>{
+    res.send(err);
+  })
+})
+
+//Query 4
+app.get('/getQuery4', async (req, res) => {
+  const attribute = req.query.attr.split("|")
+  const op = req.query.op.split("|")
+  const val = req.query.val.split("|")
+  let sqlStrings = [];
+
+  for (let i = 0; i < attribute.length - 1; i++) {
+    let temp = attrToAttribute[attribute[i]]
+    if (temp != null && temp.length > 0) {
+      sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
+    }
+  }
+  async function fetchQuery4() {
+    try {
+		const connection = await oracledb.getConnection();
+
+		oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+
+		let filters = sqlStrings.join(' AND ')
+		if (sqlStrings.length > 0) {
+			filters = ` AND ${filters}`
+		}
+
+		const query = 
+		  `SELECT 
+			TO_CHAR(DATE '1970-01-01'
+				+ FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96, 'HH24::MI::SS')
+			AS CRASH_TIME,
+			AVG(TOTAL_INJURY_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT + DEATH_COUNT)) * 100 
+			AS PercentInjury, 
+			AVG(DEATH_COUNT / (TOTAL_INJURY_COUNT + NOT_INJURED_COUNT + DEATH_COUNT)) * 100
+			AS PercentDeath
+			FROM "DYLANTOSH".Unit U
+			JOIN "CWOJTAK".Crash C ON C.CRASH_ID = U.CRASH_ID
+			WHERE TOTAL_INJURY_COUNT + NOT_INJURED_COUNT + DEATH_COUNT <> 0
+				AND 2 >= (SELECT COUNT(*) FROM "JONATHAN.TROST".Person P WHERE P.CRASH_ID = C.CRASH_ID)
+			${filters}
+			GROUP BY
+				DATE '1970-01-01' + 
+				FLOOR(TO_NUMBER(TO_CHAR(CRASH_TIME, 'SSSSS'))/900)/96
+			ORDER BY CRASH_TIME ASC
+		  `
+
+		const result = await connection.execute(query)
+		console.log("Completed request");
+	  
+	    try {
+			await connection.close();
+	    }
+		catch (err) {
+			console.log("Encountered an error closing a connection in the connection pool.");
+		}
+	  
+      return result;
+    } 
+    catch(error) {
+      return error;
+    }
   }
 
   fetchQuery4()
@@ -229,28 +338,63 @@ app.get('/getQuery4', async (req, res) => {
   })
 })
 
-/*
 //Query 5
 app.get('/getQuery5', async (req, res) => {
-  async function fetchPerson() {
+  const attribute = req.query.attr.split("|")
+  const op = req.query.op.split("|")
+  const val = req.query.val.split("|")
+  let sqlStrings = [];
+
+  for (let i = 0; i < attribute.length - 1; i++) {
+    let temp = attrToAttribute[attribute[i]]
+    if (temp != null && temp.length > 0) {
+      sqlStrings.push(`${temp}  ${op[i]}  ${val[i]}`);
+    }
+  }
+  async function fetchQuery5() {
     try {
-      const connection = await oracledb.getConnection({ 
-        user: process.env.USER_NAME, 
-        password: process.env.DB_PASSWORD, 
-        connectionString: process.env.DB_URL 
-      });
+		const connection = await oracledb.getConnection();
 
-      oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-      const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
+		oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+
+		let filters = sqlStrings.join(' AND ')
+		if (sqlStrings.length > 0) {
+			filters = ` AND ${filters}`
+		}
+
+		const query = 
+		  `SELECT ACTIVE_SCHOOL_ZONE_FLAG, CONSTRUCTION_ZONE_FLAG, CRASH_YEAR,
+			COUNT(CASE CITATION WHEN 'Y' THEN 1 ELSE NULL END) 
+			/ (SELECT COUNT(*) FROM "JONATHAN.TROST".Person WHERE CITATION = 'Y') * 100
+			AS PercentCited
+			FROM "CWOJTAK".Crash C, "DYLANTOSH".Unit U, "JONATHAN.TROST".Person P
+			WHERE C.CRASH_ID = U.CRASH_ID AND C.CRASH_ID = P.CRASH_ID 
+				AND U.UNIT_NUMBER = P.UNIT_NUMBER
+			${filters}
+			GROUP BY ACTIVE_SCHOOL_ZONE_FLAG, CONSTRUCTION_ZONE_FLAG, CRASH_YEAR
+			ORDER BY ACTIVE_SCHOOL_ZONE_FLAG ASC, CONSTRUCTION_ZONE_FLAG ASC,
+				CRASH_YEAR ASC
+		  `
+
+
+		const result = await connection.execute(query)
+		console.log("Completed request");
+	  
+	    try {
+			await connection.close();
+	    }
+		catch (err) {
+			console.log("Encountered an error closing a connection in the connection pool.");
+		}
+	  
       return result;
-
     } 
     catch(error) {
       return error;
     }
   }
 
-  fetchPerson()
+  fetchQuery5()
   .then(dbRes =>{
     res.send(dbRes);
   })
@@ -258,7 +402,6 @@ app.get('/getQuery5', async (req, res) => {
     res.send(err);
   })
 })
-*/
 
 process.once("SIGTERM", deinit_database).once("SIGINT", deinit_database);
 
@@ -267,7 +410,6 @@ init_database();
 
 /*
 //Example testPerson Query
-
 app.get('/getPerson', async (req, res) => {
     async function fetchPerson() {
       try {
@@ -276,17 +418,14 @@ app.get('/getPerson', async (req, res) => {
           password: process.env.DB_PASSWORD, 
           connectionString: process.env.DB_URL 
         });
-
         oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
         const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
         return result;
-
       } 
       catch(error) {
         return error;
       }
     }
-
     fetchPerson()
     .then(dbRes =>{
       res.send(dbRes);

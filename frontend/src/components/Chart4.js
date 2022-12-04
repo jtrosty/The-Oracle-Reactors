@@ -35,8 +35,8 @@ function Chart4(props) {
 	else type = inType;
 	
 	var options = null;
-	if(type == "Bar") {
-		var options = {
+	if(type === "Bar") {
+		options = {
 			responsive: true,
 			parsing: {
 			  xAxisKey: 'x',
@@ -63,7 +63,7 @@ function Chart4(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day (HH::MM::SS) - 24HR; 15 Minute Intervals",
+						text: "Time of Day - 24HR; 15 Minute Intervals",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -101,7 +101,7 @@ function Chart4(props) {
 		};
 	}
 	else {
-		var options = {
+		options = {
 			responsive: true,
 			parsing: {
 			  xAxisKey: 'x',
@@ -138,7 +138,7 @@ function Chart4(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 15 Minute Intervals",
+						text: "Time of Day - 24HR; 15 Minute Intervals",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -179,14 +179,14 @@ function Chart4(props) {
   var xlabels = [];
   for(let i = 0; i < data4.length; i++) {
     xlabels.push(data4[i][0].toString());
-	if(xlabels[i][0] == '0') xlabels[i] = xlabels[i].slice(1, xlabels[i].length-4);
+	if(xlabels[i][0] === '0') xlabels[i] = xlabels[i].slice(1, xlabels[i].length-4);
 	else xlabels[i] = xlabels[i].slice(0, xlabels[i].length-4);
 	xlabels[i] = xlabels[i].replaceAll("::", ":");
   }
 
   var seriesInjury = [];
   for(let i = 0; i < data4.length; i++) {
-	var l = {}
+	var l = {};
 	l.x = xlabels[i]
 	l.y = data4[i][1]
     seriesInjury.push(l);
@@ -194,13 +194,13 @@ function Chart4(props) {
 
   var seriesDeath = [];
   for(let i = 0; i < data4.length; i++) {
-    var l = {}
+    var l = {};
 	l.x = xlabels[i]
 	l.y = data4[i][2]
     seriesDeath.push(l);
   }
   
-  if(type == "Bar") {
+  if(type === "Bar") {
 	  const data = {
 		datasets: [
 		  {
