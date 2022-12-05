@@ -100,7 +100,6 @@ class Query4Manager extends React.Component {
 	}
 }
 
-
 const Query4 = () => {
   return (
 	<div className="bodyContainer">
