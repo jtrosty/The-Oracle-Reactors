@@ -54,7 +54,7 @@ function Chart1(props) {
 			  title: {
 				  display: true,
 				  //title of the chart
-				  text: 'Avrage',
+				  text: 'Average Percent Crash over Course of Years',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -66,7 +66,7 @@ function Chart1(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -87,7 +87,7 @@ function Chart1(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Injury/Death Rate (%)",
+						text: "Average Crash Rate (%)",
 						color: '#FFF'
 					},
 					ticks: {
@@ -119,7 +119,7 @@ function Chart1(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: 'Average Percent Injury and Death Rates Over the Course of A Day',
+				  text: 'Average Percent Crash over Course of Years',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -141,7 +141,7 @@ function Chart1(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -162,7 +162,7 @@ function Chart1(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Injury/Death Rate (%)",
+						text: "Average Crash Rate (%)",
 						color: '#FFF'
 					},
 					ticks: {
@@ -191,9 +191,7 @@ function Chart1(props) {
 
 	//console.log(data1);
 
-	for (var i = 0; i < data1.length; i++){
-		console.log("the first data is "+ data1[i][1]);
-	}
+
   var xlabels = [];
   for(let i = 0; i < data1.length; i++) {
     xlabels.push(data1[i][1].toString());
