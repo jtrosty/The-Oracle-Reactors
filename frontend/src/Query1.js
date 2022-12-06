@@ -62,7 +62,7 @@ class Query1Manager extends React.Component {
 	
 	render() {
 		return (
-			<div className="queryContainer">
+			<div>
 				<div className="chartContainer">
 					{this.state.ins}
 				</div>
@@ -70,11 +70,28 @@ class Query1Manager extends React.Component {
 					<h3>Options</h3>
 					<SChartType handleChange={(value) => { this.setState({chartType: value }) }} />
 					<h3>Filters</h3>
-					
-					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 		
+					<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
+					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 
+					<SActiveSchoolZoneFlag handleChange={(value) => { this.setState({aszf: value}) }} />
+					<SAtIntersection handleChange={(value) => { this.setState({ai: value}) }} />
+					<SCrashDeathCount handleChange={(value) => { this.setState({cdc: value.target.value}) }} handleOpChange={(value) => { this.setState({cdcop: value}) }} />
+					<SConstructionZoneFlag handleChange={(value) => { this.setState({czf: value}) }} /> 
+					<SStopSignFlag handleChange={(value) => { this.setState({ssf: value}) }} />
+					<SYieldSignFlag handleChange={(value) => { this.setState({ysf: value}) }} /> 
+					<STrafficControlType handleChange={(value) => { this.setState({tct: value}) }} /> 
+					<SDayOfWeek handleChange={(value) => { this.setState({dow: value}) }} />
+					<SCrashInjuryCount handleChange={(value) => { this.setState({ctic: value.target.value}) }} handleOpChange={(value) => { this.setState({cticop: value}) }} />
+					<SUnitDeathCount handleChange={(value) => { this.setState({udc: value.target.value}) }} handleOpChange={(value) => { this.setState({udcop: value}) }} /> 
+					<SVehicleModelName handleChange={(value) => { this.setState({vmn: value}) }} /> 
+					<SVehicleMake handleChange={(value) => { this.setState({vm: value}) }} /> 
+					<SUnitNotInjuredCount handleChange={(value) => { this.setState({unic: value.target.value}) }} handleOpChange={(value) => { this.setState({udicop: value}) }} /> 
+					<SUnitTotalInjuredCount handleChange={(value) => { this.setState({utic: value.target.value}) }} handleOpChange={(value) => { this.setState({uticop: value}) }} /> 
+					<SVehicleModelYear handleChange={(value) => { this.setState({vmy: value}) }} /> 
 					<SContributingFactor1 handleChange={(value) => { this.setState({cf1: value}) }} /> 
 					<SContributingFactor2 handleChange={(value) => { this.setState({cf2: value}) }} /> 
 					<SContributingFactor3 handleChange={(value) => { this.setState({cf3: value}) }} /> 
+					<SCommercialVehicleType handleChange={(value) => { this.setState({cvt: value}) }} /> 
+					<SUnitDescription handleChange={(value) => { this.setState({ud: value}) }} /> 
 					
 					
 					<button onClick={ () => {
@@ -89,16 +106,18 @@ class Query1Manager extends React.Component {
 	}
 }
 
-const Query4 = () => {
+const Query1 = () => {
   return (
 	<div className="bodyContainer">
-		<h1>Query 1 - Contributing factors and collisions</h1>
-		<h3>Description</h3>
-		<p> The purpose of this query is to analyze how the percent collision based on diffrent Contributing factors.</p>
-		<h3>Chart</h3>
-		<Query1Manager />
+		<h1>Query 1 - Correlating Contributing Factors and Collisions</h1>
+		<div className="queryContainer">
+			<h3>Description</h3>
+			<p>The purpose of this query is to analyze the proportion of accidents attributed to the top 6 leading crash contributing factors.</p>
+			<h3>Chart</h3>
+			<Query1Manager />
+		</div>
 	</div>
   );
 }
 
-export default Query4;
+export default Query1;

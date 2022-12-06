@@ -85,7 +85,10 @@ function Chart4(props) {
 					title: {
 						display: true,
 						text: "Average Injury/Death Rate (%)",
-						color: '#FFF'
+						color: '#FFF',
+						font: {
+							size: 16
+						}
 					},
 					ticks: {
 						color: '#FFF',
@@ -160,7 +163,10 @@ function Chart4(props) {
 					title: {
 						display: true,
 						text: "Average Injury/Death Rate (%)",
-						color: '#FFF'
+						color: '#FFF',
+						font: {
+							size: 16
+						}
 					},
 					ticks: {
 						color: '#FFF',

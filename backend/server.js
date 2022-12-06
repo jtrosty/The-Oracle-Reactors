@@ -158,6 +158,7 @@ app.get('/getQuery2', async (req, res) => {
 			WHERE (VEHICLE_MAKE, VEHICLE_MODEL_NAME) IN 
 				(SELECT VEHICLE_MAKE, VEHICLE_MODEL_NAME
 					FROM "DYLANTOSH".Unit
+					JOIN "CWOJTAK".Crash ON "CWOJTAK".Crash.CRASH_ID = "DYLANTOSH".Unit.CRASH_ID
 					WHERE VEHICLE_MAKE IS NOT NULL AND VEHICLE_MODEL_NAME IS NOT NULL
 					${filters}
 					GROUP BY VEHICLE_MAKE, VEHICLE_MODEL_NAME
@@ -168,7 +169,6 @@ app.get('/getQuery2', async (req, res) => {
 			GROUP BY VEHICLE_MAKE, VEHICLE_MODEL_NAME, CRASH_YEAR
 			ORDER BY VEHICLE_MAKE ASC, VEHICLE_MODEL_NAME ASC, CRASH_YEAR ASC
 		  `
-
 
 		const result = await connection.execute(query)
 		console.log("Completed request");
