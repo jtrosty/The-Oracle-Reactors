@@ -51,7 +51,7 @@ function Chart5(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: 'Average Percent Injury and Death Rates Over the Course of A Day',
+				  text: 'Percent of Drivers Receiving Citations Given in School Zones, in Construction Zones, and on Regular Roads Over Time',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -63,7 +63,7 @@ function Chart5(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -84,7 +84,7 @@ function Chart5(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Injury/Death Rate (%)",
+						text: "% of Drivers Receiving Citations",
 						color: '#FFF'
 					},
 					ticks: {
@@ -116,7 +116,7 @@ function Chart5(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: 'Average Percent Injury and Death Rates Over the Course of A Day',
+				  text: 'Percent of Drivers Receiving Citations Given in School Zones, in Construction Zones, and on Regular Roads Over Time',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -138,7 +138,7 @@ function Chart5(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -159,7 +159,7 @@ function Chart5(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Injury/Death Rate (%)",
+						text: "% of Drivers Receiving Citations",
 						color: '#FFF'
 					},
 					ticks: {
@@ -178,40 +178,79 @@ function Chart5(props) {
   
   var xlabels = [];
   for(let i = 0; i < data5.length; i++) {
-    xlabels.push(data5[i][0].toString());
-	if(xlabels[i][0] === '0') xlabels[i] = xlabels[i].slice(1, xlabels[i].length - 4);
-	else xlabels[i] = xlabels[i].slice(0, xlabels[i].length - 4);
-	xlabels[i] = xlabels[i].replaceAll("::", ":");
+	var put = true;
+	for(let j = 0; j < xlabels.length; j++) {
+		if(xlabels[j].toString() == data5[i][2]) {
+			put = false;
+			break;
+		}
+	}
+    if(put) xlabels.push(data5[i][2].toString());
+  }
+  xlabels.sort(function(a, b){return a - b});
+
+  var seriesNeither = [];
+  for(let i = 0; i < data5.length; i++) {
+	if(data5[i][0] == "N" && data5[i][1] == "N") {
+		var l = {};
+		l.x = data5[i][2].toString();
+		l.y = data5[i][3];
+		seriesNeither.push(l);
+	}
   }
 
-  var seriesInjury = [];
+  var seriesSchool = [];
   for(let i = 0; i < data5.length; i++) {
-	var l = {};
-	l.x = xlabels[i]
-	l.y = data5[i][1]
-    seriesInjury.push(l);
+	if(data5[i][0] == "Y" && data5[i][1] == "N") {
+		var l = {};
+		l.x = data5[i][2].toString();
+		l.y = data5[i][3];
+		seriesSchool.push(l);
+	}
   }
-
-  var seriesDeath = [];
+  
+  var seriesConstruction = [];
   for(let i = 0; i < data5.length; i++) {
-    var l = {};
-	l.x = xlabels[i]
-	l.y = data5[i][2]
-    seriesDeath.push(l);
+	if(data5[i][0] == "N" && data5[i][1] == "Y") {
+		var l = {};
+		l.x = data5[i][2].toString();
+		l.y = data5[i][3];
+		seriesConstruction.push(l);
+	}
+  }
+  
+  var seriesBoth = [];
+  for(let i = 0; i < data5.length; i++) {
+	if(data5[i][0] == "Y" && data5[i][1] == "Y") {
+		var l = {};
+		l.x = data5[i][2].toString();
+		l.y = data5[i][3];
+		seriesBoth.push(l);
+	}
   }
   
   if(type === "Bar") {
 	  const data = {
 		datasets: [
 		  {
-			label: "Percent Injury Rate",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
+			label: "Neither School Zone Nor Construction Zone",
+			data: seriesNeither,
+			backgroundColor: "rgba(255, 150, 150, 0.5)"
 		  },
 		  {
-			label: "Percent Death Rate",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.5)"
+			label: "School Zone",
+			data: seriesSchool,
+			backgroundColor: "rgba(150, 150, 255, 0.5)"
+		  },
+		  {
+			label: "Construction Zone",
+			data: seriesConstruction,
+			backgroundColor: "rgba(150, 255, 150, 0.5)"
+		  },
+		  {
+			label: "Both School Zone and Construction Zone",
+			data: seriesBoth,
+			backgroundColor: "rgba(150, 150, 150, 0.5)"
 		  },
 		],
 	  };
@@ -224,14 +263,24 @@ function Chart5(props) {
 	const data = {
 		datasets: [
 		  {
-			label: "Percent Injury Rate",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.7)"
+			label: "Neither School Zone Nor Construction Zone",
+			data: seriesNeither,
+			backgroundColor: "rgba(255, 150, 150, 0.7)"
 		  },
 		  {
-			label: "Percent Death Rate",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.7)"
+			label: "School Zone",
+			data: seriesSchool,
+			backgroundColor: "rgba(150, 150, 255, 0.7)"
+		  },
+		  {
+			label: "Construction Zone",
+			data: seriesConstruction,
+			backgroundColor: "rgba(150, 255, 150, 0.7)"
+		  },
+		  {
+			label: "Both School Zone and Construction Zone",
+			data: seriesBoth,
+			backgroundColor: "rgba(150, 150, 150, 0.7)"
 		  },
 		],
 	  };
