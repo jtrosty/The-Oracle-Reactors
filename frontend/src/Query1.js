@@ -89,7 +89,7 @@ class Query1Manager extends React.Component {
 	}
 }
 
-const Query4 = () => {
+const Query1 = () => {
   return (
 	<div className="bodyContainer">
 		<h1>Query 1 - Relating Crash Injuries and Deaths With Time of Day</h1>
@@ -101,4 +101,4 @@ const Query4 = () => {
   );
 }
 
-export default Query4;
+export default Query1;
