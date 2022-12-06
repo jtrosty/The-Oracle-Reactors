@@ -70,7 +70,7 @@ class Query1Manager extends React.Component {
 					<h3>Options</h3>
 					<SChartType handleChange={(value) => { this.setState({chartType: value }) }} />
 					<h3>Filters</h3>
-					<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
+					
 					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 		
 					<SContributingFactor1 handleChange={(value) => { this.setState({cf1: value}) }} /> 
 					<SContributingFactor2 handleChange={(value) => { this.setState({cf2: value}) }} /> 
@@ -92,9 +92,9 @@ class Query1Manager extends React.Component {
 const Query4 = () => {
   return (
 	<div className="bodyContainer">
-		<h1>Query 1 - Relating Crash Injuries and Deaths With Time of Day</h1>
+		<h1>Query 1 - Contributing factors and collisions</h1>
 		<h3>Description</h3>
-		<p> The purpose of this query is to analyze how the percent injury and death rates resulting from vehicle accidents involving two or more people vary on average throughout a typical day.</p>
+		<p> The purpose of this query is to analyze how the percent collision based on diffrent Contributing factors.</p>
 		<h3>Chart</h3>
 		<Query1Manager />
 	</div>
