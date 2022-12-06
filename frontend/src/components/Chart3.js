@@ -182,6 +182,7 @@ function Chart3(props) {
     xlabels.push(data3[i][0].toString());
   }
 
+  console.log(data3);
   var seriesNames = [];
   for(let i = 0; i < data3.length; i++) {
 	var add = true;
@@ -192,6 +193,8 @@ function Chart3(props) {
 		}
 	}
 	if(add) seriesNames.push(data3[i][0]);
+
+	//console.log("name is"+ seriesNames);
   }
 
   var series = [];
@@ -206,7 +209,7 @@ function Chart3(props) {
 			series[i].push(l);
 		}
 	  }
-	  console.log(series[i]);
+	  
   }
   
   var readableLabels = [];

@@ -70,7 +70,7 @@ class Query1Manager extends React.Component {
 					<h3>Options</h3>
 					<SChartType handleChange={(value) => { this.setState({chartType: value }) }} />
 					<h3>Filters</h3>
-					<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
+					
 					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 		
 					<SContributingFactor1 handleChange={(value) => { this.setState({cf1: value}) }} /> 
 					<SContributingFactor2 handleChange={(value) => { this.setState({cf2: value}) }} /> 
@@ -89,7 +89,7 @@ class Query1Manager extends React.Component {
 	}
 }
 
-const Query1 = () => {
+const Query4 = () => {
   return (
 	<div className="bodyContainer">
 		<h1>Query 1 - Relating Crash Injuries and Deaths With Time of Day</h1>
@@ -101,4 +101,4 @@ const Query1 = () => {
   );
 }
 
-export default Query1;
+export default Query4;
