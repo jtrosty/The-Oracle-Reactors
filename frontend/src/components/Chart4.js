@@ -175,7 +175,7 @@ function Chart4(props) {
 			}
 		};
 	}
-  
+	
   var xlabels = [];
   for(let i = 0; i < data4.length; i++) {
     xlabels.push(data4[i][0].toString());

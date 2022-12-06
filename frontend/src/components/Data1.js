@@ -68,5 +68,5 @@ class Data1 extends React.Component {
     );
   }
 }
-
+ 
 export default Data1;
