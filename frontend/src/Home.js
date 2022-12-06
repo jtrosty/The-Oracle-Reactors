@@ -31,6 +31,14 @@ const Home = () => {
 					<p>Get started on reviewing Texas vehicle accident data by visiting one of the available trend queries or by visiting the FAQ:</p>
 				</header>
 				<FrontPageLinkSelection />
+				<header className="App-title">
+					<h3>Query Descriptions</h3>
+					<p>Query 1 involves correlating contributing factors and collisions.</p>
+					<p>Query 2 involves correlating vehicle makes and crash fatalities.</p>
+					<p>Query 3 involves correlating traffic control devices and crash injuries.</p>
+					<p>Query 4 involves correlating crash injuries and deaths with time of day.</p>
+					<p>Query 5 involves correlating citation rates after accidents with time.</p>
+				</header>
 			</div>
 		</div>
 	);

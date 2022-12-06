@@ -364,7 +364,7 @@ app.get('/getQuery5', async (req, res) => {
 		const query = 
 		  `SELECT ACTIVE_SCHOOL_ZONE_FLAG, CONSTRUCTION_ZONE_FLAG, CRASH_YEAR,
 			COUNT(CASE CITATION WHEN 'Y' THEN 1 ELSE NULL END) 
-			/ (SELECT COUNT(*) FROM "JONATHAN.TROST".Person WHERE CITATION = 'Y') * 100
+			/ COUNT(DISTINCT U.UNIT_NUMBER + C.CRASH_ID * C.CRASH_ID) * 100
 			AS PercentCited
 			FROM "CWOJTAK".Crash C, "DYLANTOSH".Unit U, "JONATHAN.TROST".Person P
 			WHERE C.CRASH_ID = U.CRASH_ID AND C.CRASH_ID = P.CRASH_ID 
@@ -402,35 +402,43 @@ app.get('/getQuery5', async (req, res) => {
   })
 })
 
+//FAQ
+app.get('/getTupleCount', async (req, res) => {
+  async function fetchTupleCount() {
+    try {
+		const connection = await oracledb.getConnection();
+
+		oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
+
+		const result = await connection.execute(`SELECT COUNT(*) FROM "CWOJTAK".Crash`);
+		const result2 = await connection.execute(`SELECT COUNT(*) FROM "DYLANTOSH".Unit`);
+		const result3 = await connection.execute(`SELECT COUNT(*) FROM "JONATHAN.TROST".Person`);
+		
+		console.log("Completed request");
+	  
+	  try {
+			await connection.close();
+	    }
+		catch (err) {
+			console.log("Encountered an error closing a connection in the connection pool.");
+		}
+	  
+      return {data: result.rows[0][0] + result2.rows[0][0] + result3.rows[0][0]};
+    } 
+    catch(error) {
+      return error;
+    }
+  }
+
+  fetchTupleCount()
+  .then(dbRes =>{
+    res.send(dbRes);
+  })
+  .catch(err =>{
+    res.send(err);
+  })
+})
+
 process.once("SIGTERM", deinit_database).once("SIGINT", deinit_database);
 
 init_database();
-
-
-/*
-//Example testPerson Query
-app.get('/getPerson', async (req, res) => {
-    async function fetchPerson() {
-      try {
-        const connection = await oracledb.getConnection({ 
-          user: process.env.USER_NAME, 
-          password: process.env.DB_PASSWORD, 
-          connectionString: process.env.DB_URL 
-        });
-        oracledb.outFormat = oracledb.OUT_FORMAT_ARRAY;
-        const result = await connection.execute(`select * from "JONATHAN.TROST".PERSON where (CRASH_ID = 12529587)`)
-        return result;
-      } 
-      catch(error) {
-        return error;
-      }
-    }
-    fetchPerson()
-    .then(dbRes =>{
-      res.send(dbRes);
-    })
-    .catch(err =>{
-      res.send(err);
-    })
-})
-*/

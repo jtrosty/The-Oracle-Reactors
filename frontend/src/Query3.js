@@ -62,7 +62,7 @@ class Query3Manager extends React.Component {
 	
 	render() {
 		return (
-			<div className="queryContainer">
+			<div>
 				<div className="chartContainer">
 					{this.state.ins}
 				</div>
@@ -70,28 +70,17 @@ class Query3Manager extends React.Component {
 					<h3>Options</h3>
 					<SChartType handleChange={(value) => { this.setState({chartType: value }) }} />
 					<h3>Filters</h3>
+					<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
+					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 
 					<SActiveSchoolZoneFlag handleChange={(value) => { this.setState({aszf: value}) }} />
 					<SAtIntersection handleChange={(value) => { this.setState({ai: value}) }} />
+					<SCrashDeathCount handleChange={(value) => { this.setState({cdc: value.target.value}) }} handleOpChange={(value) => { this.setState({cdcop: value}) }} />
 					<SConstructionZoneFlag handleChange={(value) => { this.setState({czf: value}) }} /> 
 					<SStopSignFlag handleChange={(value) => { this.setState({ssf: value}) }} />
 					<SYieldSignFlag handleChange={(value) => { this.setState({ysf: value}) }} /> 
 					<STrafficControlType handleChange={(value) => { this.setState({tct: value}) }} /> 
 					<SDayOfWeek handleChange={(value) => { this.setState({dow: value}) }} />
-					<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
-					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 
-					<SNotInjured handleChange={(value) => { this.setState({ni: value}) }} />
 					<SCrashInjuryCount handleChange={(value) => { this.setState({ctic: value.target.value}) }} handleOpChange={(value) => { this.setState({cticop: value}) }} />
-					<SUnitNotInjuredCount handleChange={(value) => { this.setState({unic: value.target.value}) }} handleOpChange={(value) => { this.setState({udicop: value}) }} /> 
-					<SUnitTotalInjuredCount handleChange={(value) => { this.setState({utic: value.target.value}) }} handleOpChange={(value) => { this.setState({uticop: value}) }} /> 
-					<SVehicleMake handleChange={(value) => { this.setState({vm: value}) }} />
-					<SVehicleModelName handleChange={(value) => { this.setState({vmn: value}) }} />
-					<SVehicleModelYear handleChange={(value) => { this.setState({vmy: value}) }} />
-					<SContributingFactor1 handleChange={(value) => { this.setState({cf1: value}) }} /> 
-					<SContributingFactor2 handleChange={(value) => { this.setState({cf2: value}) }} /> 
-					<SContributingFactor3 handleChange={(value) => { this.setState({cf3: value}) }} /> 
-					<SAge handleChange={(value) => { this.setState({a: value.target.value}) }} handleOpChange={(value) => { this.setState({aop: value}) }} /> 
-					<SEthnicity handleChange={(value) => { this.setState({e: value}) }} /> 
-					<SGender handleChange={(value) => { this.setState({g: value}) }} /> 					
 					<button onClick={ () => {
 						this.setState({load: true});
 						this.forceUpdate();
@@ -107,11 +96,13 @@ class Query3Manager extends React.Component {
 const Query3 = () => {
   return (
 	<div className="bodyContainer">
-		<h1>Query 3 - Relating Crash Injuries to Types Of Traffic Control Devices at Intersections Over Time</h1>
-		<h3>Description</h3>
-		<p> The purpose of this query is to analyze which traffic control devices at intersections have the highest average number of crash injuries over time in Texas.</p>
-		<h3>Chart</h3>
-		<Query3Manager />
+		<h1>Query 3 - Relating Crash Injuries to Types Of Traffic Control Devices Over Time</h1>
+		<div className="queryContainer">
+			<h3>Description</h3>
+			<p> The purpose of this query is to analyze which traffic control devices are associated with the highest number of injuries per crash on average over time in the state of Texas.</p>
+			<h3>Chart</h3>
+			<Query3Manager />
+		</div>
 	</div>
   );
 }

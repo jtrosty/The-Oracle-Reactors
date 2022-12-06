@@ -62,7 +62,7 @@ class Query4Manager extends React.Component {
 	
 	render() {
 		return (
-			<div className="queryContainer">
+			<div>
 				<div className="chartContainer">
 					{this.state.ins}
 				</div>
@@ -104,10 +104,12 @@ const Query4 = () => {
   return (
 	<div className="bodyContainer">
 		<h1>Query 4 - Relating Crash Injuries and Deaths With Time of Day</h1>
-		<h3>Description</h3>
-		<p> The purpose of this query is to analyze how the percent injury and death rates resulting from vehicle accidents involving two or more people vary on average throughout a typical day.</p>
-		<h3>Chart</h3>
-		<Query4Manager />
+		<div className="queryContainer">
+			<h3>Description</h3>
+			<p> The purpose of this query is to analyze how the percent injury and death rates resulting from vehicle accidents involving two or more people vary on average throughout a typical day.</p>
+			<h3>Chart</h3>
+			<Query4Manager />
+		</div>
 	</div>
   );
 }
