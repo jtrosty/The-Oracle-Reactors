@@ -1,38 +1,70 @@
 //Set data values for Query 3
 import React from "react";
 import axios from "axios";
+import Chart3 from "./Chart3.js"
 
 class Data3 extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
+	
     this.state = {
-      data: []
+      data: undefined
     }
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/getQuery3')
+	var a = this.props.attrFilters;
+	var b = this.props.opFilters;
+	var c = this.props.valFilters;
+    axios.get('http://localhost:5000/getQuery3', {params: {attr: a, op: b, val: c}})
       .then((response) => {
-        console.log(response.data.rows);
-        this.setState({
+        //console.log(response.data.rows); //Debug information
+        if(response.data.rows === undefined)
+		{
+			this.componentDidMount()
+			return;
+		}
+		this.setState({
             data: response.data.rows
         });
       });
   }
+  
+  componentDidUpdate(prevProps) {
+	if(prevProps.attrFilters !== this.props.attrFilters || prevProps.opFilters !== this.props.opFilters || prevProps.valFilters !== this.props.valFilters) {
+		this.setState({data: undefined})
+		var a = this.props.attrFilters;
+		var b = this.props.opFilters;
+		var c = this.props.valFilters;
+		axios.get('http://localhost:5000/getQuery3', {params: {attr: a, op: b, val: c}})
+		  .then((response) => {
+			//console.log(response.data); //Debug information
+			if(response.data.rows === undefined)
+			{
+				this.componentDidMount()
+				return;
+			}
+			this.setState({
+				data: response.data.rows
+			});
+		  });
+	}
+  }
+  
   render() {
+	var ret = this.state.data;
+
+	if(ret === undefined) {
+		return ( <p>Loading chart; please wait...</p> );
+	}
+
+	var ct = this.props.chartType;
+
+	console.log(this.props);
 
     return (
-        <div>
-            TupleNumber--crash_ID--unit_number--person_number--citation--died--age--ethnicity--gender--not_injured
-            {
-            this.state.data.map((item, index) => {
-                return (
-                <div key={index}>{index}--{item[0]}--{item[1]}--{item[2]}--{item[3]}--{item[4]}--{item[5]}--{item[6]}--{item[7]}--{item[8]}</div>
-                )
-            })
-            }
-        </div>
+		<Chart3 data3={ret} inType={ct} key={this.props.attrFilters} key2={this.props.opFilters} key3={this.props.valFilters} key4={this.props.chartType} />
     );
   }
 }

@@ -13,7 +13,7 @@ class Query4Manager extends React.Component {
 			ins: "Click the Load Chart button to get started!"
 		}
 	}
-	
+
 	componentDidUpdate()
 	{
 		if(this.state.load === false) return;

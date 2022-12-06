@@ -25,8 +25,10 @@ ChartJS.register(
   LineElement
 );
 
+
+// how to show the chart
 function Chart1(props) {
-	var data1 = props["data1"];
+	var data1 = props["data1"]; // the data from the server
 	var inType = props["inType"];
 	
 	var type = null;
@@ -51,7 +53,8 @@ function Chart1(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: 'Average Percent Injury and Death Rates Over the Course of A Day',
+				  //title of the chart
+				  text: 'Average Percent Crash over Course of Years',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -63,7 +66,7 @@ function Chart1(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -84,7 +87,7 @@ function Chart1(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Injury/Death Rate (%)",
+						text: "Average Crash Rate (%)",
 						color: '#FFF'
 					},
 					ticks: {
@@ -116,7 +119,7 @@ function Chart1(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: 'Average Percent Injury and Death Rates Over the Course of A Day',
+				  text: 'Average Percent Crash over Course of Years',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -138,7 +141,7 @@ function Chart1(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -159,7 +162,7 @@ function Chart1(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Injury/Death Rate (%)",
+						text: "Average Crash Rate (%)",
 						color: '#FFF'
 					},
 					ticks: {
@@ -176,43 +179,46 @@ function Chart1(props) {
 		};
 	}
   
+
+	/*
+	Data coming in:
+	 CONTRIBUTING_FACTOR_1, CRASH_YEAR, 
+			COUNT(Crash.CRASH_ID) / 
+				(SELECT COUNT(CRASH_ID) FROM Crash) * 100
+	*/
+
+	//parsing data
+
+	//console.log(data1);
+
+
   var xlabels = [];
   for(let i = 0; i < data1.length; i++) {
-    xlabels.push(data1[i][0].toString());
-	if(xlabels[i][0] === '0') xlabels[i] = xlabels[i].slice(1, xlabels[i].length-4);
-	else xlabels[i] = xlabels[i].slice(0, xlabels[i].length-4);
-	xlabels[i] = xlabels[i].replaceAll("::", ":");
+    xlabels.push(data1[i][1].toString());
+
   }
 
-  var seriesInjury = [];
+
+  var ContributingFactor = [];
   for(let i = 0; i < data1.length; i++) {
 	var l = {};
 	l.x = xlabels[i]
-	l.y = data1[i][1]
-    seriesInjury.push(l);
+	l.y = data1[i][2]
+    ContributingFactor.push(l);
   }
 
-  var seriesDeath = [];
-  for(let i = 0; i < data1.length; i++) {
-    var l = {};
-	l.x = xlabels[i]
-	l.y = data1[i][2]
-    seriesDeath.push(l);
-  }
-  
+
+
+
   if(type === "Bar") {
 	  const data = {
 		datasets: [
 		  {
 			label: "Percent Injury Rate",
-			data: seriesInjury,
+			data: ContributingFactor,
 			backgroundColor: "rgba(255, 99, 132, 0.5)"
 		  },
-		  {
-			label: "Percent Death Rate",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.5)"
-		  },
+	
 		],
 	  };
 	  
@@ -225,14 +231,10 @@ function Chart1(props) {
 		datasets: [
 		  {
 			label: "Percent Injury Rate",
-			data: seriesInjury,
+			data: ContributingFactor,
 			backgroundColor: "rgba(255, 99, 132, 0.7)"
 		  },
-		  {
-			label: "Percent Death Rate",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.7)"
-		  },
+
 		],
 	  };
 	  
