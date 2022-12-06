@@ -167,6 +167,7 @@ function Chart1(props) {
 					},
 					ticks: {
 						color: '#FFF',
+						maxTicksLimit: 19,
 						font: {
 							size: 16
 						}
@@ -220,13 +221,16 @@ function Chart1(props) {
 		if(data1[j][0] == seriesNames[i]) {
 			var l = {};
 			l.x = data1[j][1].toString();
-			l.y = data1[j][2];
+			l.y = (data1[j][2])*10;
+			if((data1[j][2])*10 >= 90){
+				l.y = ((data1[j][2])*10) -20;
+			}
 			series[i].push(l);
 		}
 	  }
 	  
   }
-  console.log("name is"+ seriesNames);
+  console.log( series);
 
 
   
@@ -283,22 +287,22 @@ function Chart1(props) {
 		  {
 			label: readableLabels[1],
 			data: series[1],
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
+			backgroundColor: "rgba(155, 255, 155, 0.7)"
 		  },
 		  {
 			label: readableLabels[2],
 			data: series[2],
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
+			backgroundColor: "rgba(155, 155, 255, 0.7)"
 		  },
 		  {
 			label: readableLabels[3],
 			data: series[3],
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
+			backgroundColor: "rgba(155, 155, 155, 0.7)"
 		  },
 		  {
 			label: readableLabels[4],
 			data: series[4],
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
+			backgroundColor: "rgba(255, 255, 255, 0.7)"
 		  }
 		  
 		],
@@ -319,22 +323,22 @@ function Chart1(props) {
 			  {
 				label: readableLabels[1],
 				data: series[1],
-				backgroundColor: "rgba(255, 99, 132, 0.5)"
+				backgroundColor: "rgba(155, 255, 155, 0.7)"
 			  },
 			  {
 				label: readableLabels[2],
 				data: series[2],
-				backgroundColor: "rgba(255, 99, 132, 0.5)"
+				backgroundColor: "rgba(155, 155, 255, 0.7)"
 			  },
 			  {
 				label: readableLabels[3],
 				data: series[3],
-				backgroundColor: "rgba(255, 99, 132, 0.5)"
+				backgroundColor: "rgba(155, 155, 155, 0.7)"
 			  },
 			  {
 				label: readableLabels[4],
 				data: series[4],
-				backgroundColor: "rgba(255, 99, 132, 0.5)"
+				backgroundColor: "rgba(255, 255, 255, 0.7)"
 			  }
 		],
 	  };
