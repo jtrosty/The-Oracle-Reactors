@@ -61,8 +61,6 @@ class Data1 extends React.Component {
 
 	var ct = this.props.chartType;
 
-	console.log(this.props);
-
     return (
 		<Chart1 data1={ret} inType={ct} key={this.props.attrFilters} key2={this.props.opFilters} key3={this.props.valFilters} key4={this.props.chartType} />
     );

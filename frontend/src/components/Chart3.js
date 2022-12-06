@@ -206,7 +206,6 @@ function Chart3(props) {
 			series[i].push(l);
 		}
 	  }
-	  console.log(series[i]);
   }
   
   var readableLabels = [];
@@ -229,7 +228,7 @@ function Chart3(props) {
 	  const data = {
 		datasets: [
 		  {
-			label: readableLabels[0] ,
+			label: readableLabels[0],
 			data: series[0],
 			backgroundColor: "rgba(255, 155, 155, 0.5)"
 		  },

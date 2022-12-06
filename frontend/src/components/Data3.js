@@ -39,7 +39,7 @@ class Data3 extends React.Component {
 		var c = this.props.valFilters;
 		axios.get('http://localhost:5000/getQuery3', {params: {attr: a, op: b, val: c}})
 		  .then((response) => {
-			//console.log(response.data); //Debug information
+			//console.log(response.data); //Debug informationB
 			if(response.data.rows === undefined)
 			{
 				this.componentDidMount()
@@ -60,8 +60,6 @@ class Data3 extends React.Component {
 	}
 
 	var ct = this.props.chartType;
-
-	console.log(this.props);
 
     return (
 		<Chart3 data3={ret} inType={ct} key={this.props.attrFilters} key2={this.props.opFilters} key3={this.props.valFilters} key4={this.props.chartType} />
