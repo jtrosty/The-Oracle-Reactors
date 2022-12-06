@@ -85,7 +85,10 @@ function Chart5(props) {
 					title: {
 						display: true,
 						text: "% of Drivers Receiving Citations",
-						color: '#FFF'
+						color: '#FFF',
+						font: {
+							size: 16
+						}
 					},
 					ticks: {
 						color: '#FFF',
@@ -160,7 +163,10 @@ function Chart5(props) {
 					title: {
 						display: true,
 						text: "% of Drivers Receiving Citations",
-						color: '#FFF'
+						color: '#FFF',
+						font: {
+							size: 16
+						}
 					},
 					ticks: {
 						color: '#FFF',

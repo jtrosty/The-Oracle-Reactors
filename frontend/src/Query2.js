@@ -62,7 +62,7 @@ class Query2Manager extends React.Component {
 	
 	render() {
 		return (
-			<div className="queryContainer">
+			<div>
 				<div className="chartContainer">
 					{this.state.ins}
 				</div>
@@ -74,13 +74,18 @@ class Query2Manager extends React.Component {
 					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 
 					<SActiveSchoolZoneFlag handleChange={(value) => { this.setState({aszf: value}) }} />
 					<SAtIntersection handleChange={(value) => { this.setState({ai: value}) }} />
+					<SCrashDeathCount handleChange={(value) => { this.setState({cdc: value.target.value}) }} handleOpChange={(value) => { this.setState({cdcop: value}) }} />
 					<SConstructionZoneFlag handleChange={(value) => { this.setState({czf: value}) }} /> 
 					<SStopSignFlag handleChange={(value) => { this.setState({ssf: value}) }} />
 					<SYieldSignFlag handleChange={(value) => { this.setState({ysf: value}) }} /> 
 					<STrafficControlType handleChange={(value) => { this.setState({tct: value}) }} /> 
 					<SDayOfWeek handleChange={(value) => { this.setState({dow: value}) }} />
+					<SCrashInjuryCount handleChange={(value) => { this.setState({ctic: value.target.value}) }} handleOpChange={(value) => { this.setState({cticop: value}) }} />
+					<SUnitDeathCount handleChange={(value) => { this.setState({udc: value.target.value}) }} handleOpChange={(value) => { this.setState({udcop: value}) }} /> 
 					<SVehicleModelName handleChange={(value) => { this.setState({vmn: value}) }} /> 
 					<SVehicleMake handleChange={(value) => { this.setState({vm: value}) }} /> 
+					<SUnitNotInjuredCount handleChange={(value) => { this.setState({unic: value.target.value}) }} handleOpChange={(value) => { this.setState({udicop: value}) }} /> 
+					<SUnitTotalInjuredCount handleChange={(value) => { this.setState({utic: value.target.value}) }} handleOpChange={(value) => { this.setState({uticop: value}) }} /> 
 					<SVehicleModelYear handleChange={(value) => { this.setState({vmy: value}) }} /> 
 					<SContributingFactor1 handleChange={(value) => { this.setState({cf1: value}) }} /> 
 					<SContributingFactor2 handleChange={(value) => { this.setState({cf2: value}) }} /> 
@@ -103,11 +108,13 @@ class Query2Manager extends React.Component {
 const Query2 = () => {
   return (
 	<div className="bodyContainer">
-		<h1>Query 2 - Relating Crash Injuries and Deaths With Time of Day</h1>
-		<h3>Description</h3>
-		<p> The purpose of this query is to analyze how the percent injury and death rates resulting from vehicle accidents involving two or more people vary on average throughout a typical day.</p>
-		<h3>Chart</h3>
-		<Query2Manager />
+		<h1>Query 2 - Correlating Vehicle Makes and Crash Fatalities</h1>
+		<div className="queryContainer">
+			<h3>Description</h3>
+			<p> The purpose of this query is to analyze how crash fatalities in Texas have varied over the last ten years for the top 5 vehicle makes with the highest average number of deaths.</p>
+			<h3>Chart</h3>
+			<Query2Manager />
+		</div>
 	</div>
   );
 }

@@ -54,7 +54,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: "Average Number of Fatalities/Make and Model per crash",
+				  text: "Average Number of Fatalities Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -66,7 +66,7 @@ function Chart2(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Dates",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -87,8 +87,11 @@ function Chart2(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Deaths/Make",
-						color: '#FFF'
+						text: "Average Number of Fatalities",
+						color: '#FFF',
+						font: {
+							size: 16
+						}
 					},
 					ticks: {
 						color: '#FFF',
@@ -119,7 +122,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-					text: "Average Number of Fatalities/Make and Model per crash",
+					text: "Average Number of Fatalities Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -141,7 +144,7 @@ function Chart2(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time in years",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -162,8 +165,11 @@ function Chart2(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Number of Fatalities/Make and Model per crash",
-						color: '#FFF'
+						text: "Average Number of Fatalities",
+						color: '#FFF',
+						font: {
+							size: 16
+						}
 					},
 					ticks: {
 						color: '#FFF',
@@ -178,7 +184,6 @@ function Chart2(props) {
 			}
 		};
 	}
-  
 
 	var xlabels = [];
 	var numOfYears = 0;
@@ -187,10 +192,6 @@ function Chart2(props) {
 		if (i != 0 && numOfYears == 0 && (data2[i][2] == data2[0][2])) {
 			numOfYears = i;
 		}
-		//if(xlabels[i][0] === '0') xlabels[i] = xlabels[i].slice(1, xlabels[i].length-4);
-		//else xlabels[i] = xlabels[i].slice(0, xlabels[i].length-4);
-		// TODO: (Jon) fiure out what the date info looks like
-		//xlabels[i] = xlabels[i].replaceAll("::", ":");
 	}
 
 	var vehicleMake = [];
@@ -229,13 +230,14 @@ function Chart2(props) {
 				break;
 			}
 		}
+		if(buildLabel.length == 0) buildLabel.push("UNKNOWN MAKE");
 		for(let j = 0; j < vmnlabels.length; j++) {
 			if(vmnlabels[j]["value"] == vehicleModel[i].toString()) {
 				buildLabel.push(vmnlabels[j]["label"]);
 				break;
 			}
 		}
-		//readableLabels.push(buildLabel[0] + " " + buildLabel[1]);
+		if(buildLabel.length == 1) buildLabel.push("(UNKNOWN MODEL)");
 		if (buildLabel[1] == null){
 			readableLabels.push(buildLabel[0]);
 		}
@@ -243,36 +245,34 @@ function Chart2(props) {
 			readableLabels.push(buildLabel[0] + " " + buildLabel[1]);
 		}
 	}
-	//TODO: Delete
-	console.log(readableLabels);
-	console.log(arrayOfAverageDeaths);
+	
   if(type === "Bar") {
 	  const data = {
 		datasets: [
 		  {
-			label: `Average Fatalities Per ${readableLabels[0]}`,
+			label: `${readableLabels[0]}`,
 			data: arrayOfAverageDeaths[0],
-			backgroundColor: "rgba(255, 99, 132, 0.7)"
+			backgroundColor: "rgba(255, 99, 132, 0.5)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[1]}`,
+			label: `${readableLabels[1]}`,
 			data: arrayOfAverageDeaths[1],
-			backgroundColor: "rgba(255, 255, 132, 0.7)"
+			backgroundColor: "rgba(255, 255, 132, 0.5)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[2]}`,
+			label: `${readableLabels[2]}`,
 			data: arrayOfAverageDeaths[2],
-			backgroundColor: "rgba(255, 99, 255, 0.7)"
+			backgroundColor: "rgba(255, 99, 255, 0.5)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[3]}`,
+			label: `${readableLabels[3]}`,
 			data: arrayOfAverageDeaths[3],
-			backgroundColor: "rgba(99, 255, 132, 0.7)"
+			backgroundColor: "rgba(99, 255, 132, 0.5)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[4]}`,
+			label: `${readableLabels[4]}`,
 			data: arrayOfAverageDeaths[4],
-			backgroundColor: "rgba(99, 255, 255, 0.7)"
+			backgroundColor: "rgba(99, 255, 255, 0.5)"
 		  }
 		],
 	  };
@@ -285,38 +285,31 @@ function Chart2(props) {
 	const data = {
 		datasets: [
 		  {
-			label: `Average Fatalities Per ${readableLabels[0]}`,
+			label: `${readableLabels[0]}`,
 			data: arrayOfAverageDeaths[0],
 			backgroundColor: "rgba(255, 99, 132, 0.7)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[1]}`,
+			label: `${readableLabels[1]}`,
 			data: arrayOfAverageDeaths[1],
 			backgroundColor: "rgba(255, 255, 132, 0.7)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[2]}`,
+			label: `${readableLabels[2]}`,
 			data: arrayOfAverageDeaths[2],
 			backgroundColor: "rgba(255, 99, 255, 0.7)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[3]}`,
+			label: `${readableLabels[3]}`,
 			data: arrayOfAverageDeaths[3],
 			backgroundColor: "rgba(99, 255, 132, 0.7)"
 		  },
 		  {
-			label: `Average Fatalities Per ${readableLabels[4]}`,
+			label: `${readableLabels[4]}`,
 			data: arrayOfAverageDeaths[4],
 			backgroundColor: "rgba(99, 255, 255, 0.7)"
 		  }
-		  /*
-		  {
-			label: "Percent Death Rate",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.7)"
-		  },
-		  */
-		],
+		]
 	  };
 	  
 	return (
