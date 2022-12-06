@@ -1,6 +1,4 @@
 //Edit the chart data for http://localhost:3000/Query3.js
-//For Both Bar and Line datasets, I left off {label: "INOPERATIVE (EXPLAIN IN NARRATIVE)", value:"2"} and 
-//{label: "OTHER (EXPLAIN IN NARRATIVE)", value:"17"} as possible options to display
 import React from "react";
 import {
   Chart as ChartJS,
@@ -54,7 +52,7 @@ function Chart3(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: 'Average Number of Injuries At Intersections Over Time',
+				  text: 'Average Number of Injuries Categorized by Traffic Control Device Type Over Time',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -66,7 +64,7 @@ function Chart3(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -119,7 +117,7 @@ function Chart3(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: 'Average Number of Injuries At Intersections Over Time',
+				  text: 'Average Number of Injuries Categorized by Traffic Control Device Type Over Time',
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -141,7 +139,7 @@ function Chart3(props) {
 					type: 'category',
 					title: {
 						display: true,
-						text: "Time of Day - 24HR; 15 Minute Intervals",
+						text: "Year",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -179,118 +177,84 @@ function Chart3(props) {
 		};
 	}
 
-//This part needs to transform seriesInjury and seriesDeath to series
-//for each traffic control device
-  
   var xlabels = [];
   for(let i = 0; i < data3.length; i++) {
     xlabels.push(data3[i][0].toString());
-	if(xlabels[i][0] === '0') xlabels[i] = xlabels[i].slice(1, xlabels[i].length-4);
-	else xlabels[i] = xlabels[i].slice(0, xlabels[i].length-4);
-	xlabels[i] = xlabels[i].replaceAll("::", ":");
   }
 
-  var seriesInjury = [];
+  var seriesNames = [];
   for(let i = 0; i < data3.length; i++) {
-	var l = {};
-	l.x = xlabels[i]
-	l.y = data3[i][1]
-    seriesInjury.push(l);
+	var add = true;
+	for(let j = 0; j < seriesNames.length; j++) {
+		if(data3[i][0] == seriesNames[j]) {
+			add = false;
+			break;
+		}
+	}
+	if(add) seriesNames.push(data3[i][0]);
   }
 
-  var seriesDeath = [];
-  for(let i = 0; i < data3.length; i++) {
-    var l = {};
-	l.x = xlabels[i]
-	l.y = data3[i][2]
-    seriesDeath.push(l);
+  var series = [];
+  
+  for(let i = 0; i < seriesNames.length; i++) {
+	  series.push([]);
+	  for(let j = 0; j < data3.length; j++) {
+		if(data3[j][0] == seriesNames[i]) {
+			var l = {};
+			l.x = data3[j][1].toString();
+			l.y = data3[j][2];
+			series[i].push(l);
+		}
+	  }
+	  console.log(series[i]);
+  }
+  
+  var readableLabels = [];
+  const ttclabels = [{label: "Don't Filter", value: "DNF"}, {label: "NONE", value:"1"}, {label: "INOPERATIVE", value:"2"}, {label: "OFFICER", value:"3"}, {label: "FLAGMAN", value:"4"}, {label: "SIGNAL LIGHT", value:"5"}, {label: "FLASHING RED LIGHT", value:"6"}, {label: "FLASHING YELLOW LIGHT", value:"7"}, {label: "STOP SIGN", value:"8"}, {label: "YIELD SIGN", value:"9"}, {label: "WARNING SIGN", value:"10"}, {label: "CENTER STRIPE/DIVIDER", value:"11"}, {label: "NO PASSING ZONE", value:"12"}, {label: "RR GATE/SIGNAL", value:"13"}, {label: "CROSSWALK", value:"15"}, {label: "BIKE LANE", value:"16"}, {label: "OTHER", value:"17"}, {label: "MARKED LANES", value:"20"}, {label: "SIGNAL LIGHT WITH RED LIGHT RUNNING CAMERA", value:"21"}];
+  
+  for(let i = 0; i < seriesNames.length; i++) {
+	  for(let j = 0; j < ttclabels.length; j++) {
+		if(ttclabels[j]["value"] == seriesNames[i].toString()) {
+			readableLabels.push(ttclabels[j]["label"]);
+			break;
+		}
+	  }
+  }
+  
+  for(let i = seriesNames.length; i < 5; i++) {
+	  readableLabels.push("No Series");
   }
   
   if(type === "Bar") {
 	  const data = {
 		datasets: [
 		  {
-			label: "No Traffic Control Device",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
+			label: readableLabels[0] ,
+			data: series[0],
+			backgroundColor: "rgba(255, 155, 155, 0.5)"
 		  },
 		  {
-			label: "Officer",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.5)"
+			label: readableLabels[1],
+			data: series[1],
+			backgroundColor: "rgba(155, 255, 155, 0.5)"
 		  },
 		  {
-			label: "Flagman",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
+			label: readableLabels[2],
+			data: series[2],
+			backgroundColor: "rgba(155, 155, 255, 0.5)"
 		  },
 		  {
-			label: "Signal Light",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.5)"
+			label: readableLabels[3],
+			data: series[3],
+			backgroundColor: "rgba(155, 155, 155, 0.5)"
 		  },
 		  {
-			label: "Flashing Red Light",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "Flashing Yellow Light",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.5)"
-		  },
-		  {
-			label: "Stop Sign",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "Yield Sign",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.5)"
-		  },
-		  {
-			label: "Warning Sign",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "Center Stripe/Divider",
-			data: seriesDeath,
-			backgroundColor: "rgba(53, 162, 235, 0.5)"
-		  },
-		  {
-			label: "No Passing Zone",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "RR Gate/Signal",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "Crosswalk",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "Bike Lane",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "Marked Lanes",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		  {
-			label: "Signal Light with a Red Light Running Camera",
-			data: seriesInjury,
-			backgroundColor: "rgba(255, 99, 132, 0.5)"
-		  },
-		],
-	};
+			label: readableLabels[4],
+			data: series[4],
+			backgroundColor: "rgba(255, 255, 255, 0.5)"
+		  }
+		]
+	  };
 	  
 	return (
 		<Bar options={options} data={data} />
@@ -299,87 +263,32 @@ function Chart3(props) {
   else {
 	const data = {
 		datasets: [
-			{
-			  label: "No Traffic Control Device",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Officer",
-			  data: seriesDeath,
-			  backgroundColor: "rgba(53, 162, 235, 0.5)"
-			},
-			{
-			  label: "Flagman",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Signal Light",
-			  data: seriesDeath,
-			  backgroundColor: "rgba(53, 162, 235, 0.5)"
-			},
-			{
-			  label: "Flashing Red Light",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Flashing Yellow Light",
-			  data: seriesDeath,
-			  backgroundColor: "rgba(53, 162, 235, 0.5)"
-			},
-			{
-			  label: "Stop Sign",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Yield Sign",
-			  data: seriesDeath,
-			  backgroundColor: "rgba(53, 162, 235, 0.5)"
-			},
-			{
-			  label: "Warning Sign",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Center Stripe/Divider",
-			  data: seriesDeath,
-			  backgroundColor: "rgba(53, 162, 235, 0.5)"
-			},
-			{
-			  label: "No Passing Zone",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "RR Gate/Signal",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Crosswalk",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Bike Lane",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Marked Lanes",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-			{
-			  label: "Signal Light with a Red Light Running Camera",
-			  data: seriesInjury,
-			  backgroundColor: "rgba(255, 99, 132, 0.5)"
-			},
-		],
+		  {
+			label: readableLabels[0],
+			data: series[0],
+			backgroundColor: "rgba(255, 155, 155, 0.7)"
+		  },
+		  {
+			label: readableLabels[1],
+			data: series[1],
+			backgroundColor: "rgba(155, 255, 155, 0.7)"
+		  },
+		  {
+			label: readableLabels[2],
+			data: series[2],
+			backgroundColor: "rgba(155, 155, 255, 0.7)"
+		  },
+		  {
+			label: readableLabels[3],
+			data: series[3],
+			backgroundColor: "rgba(155, 155, 155, 0.7)"
+		  },
+		  {
+			label: readableLabels[4],
+			data: series[4],
+			backgroundColor: "rgba(255, 255, 255, 0.7)"
+		  }
+		]
 	  };
 	  
 	return (
