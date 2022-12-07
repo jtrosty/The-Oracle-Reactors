@@ -184,94 +184,95 @@ function Chart2(props) {
 			}
 		};
 	}
+	
+  var xlabels = [];
+  for(let i = 0; i < data2.length; i++) {
+    xlabels.push(data2[i][0].toString());
+  }
 
-	var xlabels = [];
-	var numOfYears = 0;
-	for(let i = 0; i < data2.length; i++) {
-		xlabels.push(data2[i][2].toString());
-		if (i != 0 && numOfYears == 0 && (data2[i][2] == data2[0][2])) {
-			numOfYears = i;
+  var makeNames = [];
+  var modelNames = [];
+  for(let i = 0; i < data2.length; i++) {
+	var add = true;
+	for(let j = 0; j < makeNames.length; j++) {
+		if(data2[i][0] == makeNames[j] && data2[i][1] == modelNames[j]) {
+			add = false;
+			break;
 		}
 	}
+	if(add) makeNames.push(data2[i][0]);
+	if(add) modelNames.push(data2[i][1]);
+  }
 
-	var vehicleMake = [];
-	for(let i = 0; i < data2.length; i++) {
-		vehicleMake.push(data2[i][0]);
-	}
-
-	var vehicleModel = [];
-	for(let i = 0; i < data2.length; i++) {
-		vehicleModel.push(data2[i][1]);
-	}
-
-	var arrayOfAverageDeaths = [[],[],[],[],[]];
-	var i = 0;
-	var j = 0;
-	while (i < data2.length) {
-		var averageDeath = [];
-		for (let k = 0; k < numOfYears; k++) {
+  var series = [];
+  
+  for(let i = 0; i < makeNames.length; i++) {
+	  series.push([]);
+	  for(let j = 0; j < data2.length; j++) {
+		if(data2[j][0] == makeNames[i] && data2[j][1] == modelNames[i]) {
 			var l = {};
-			l.x = xlabels[i]
-			l.y = data2[i][3]
-			averageDeath.push(l);
-			i++;
+			l.x = data2[j][2].toString();
+			l.y = data2[j][3];
+			series[i].push(l);
 		}
-		arrayOfAverageDeaths.splice(j, 0, averageDeath);
-		j++;
-	}
+	  }
+  }
+  
+  
+  var readableLabels = [];
 
-	var readableLabels = [];
-	var k = 0;
-	for(var i = 0; i < data2.length; i = i + numOfYears) {
-		var buildLabel = [];
-		for(let j = 0; j < vmlabels.length; j++) {
-			if(vmlabels[j]["value"] == vehicleMake[i].toString()) {
-				buildLabel.push(vmlabels[j]["label"]);
-				break;
-			}
+  for(let i = 0; i < makeNames.length; i++) {
+	  var fullName = [];
+	  
+	  for(let j = 0; j < vmlabels.length; j++) {
+		if(vmlabels[j]["value"] == makeNames[i].toString()) {
+			fullName.push(vmlabels[j]["label"]);
+			break;
 		}
-		if(buildLabel.length == 0) buildLabel.push("UNKNOWN MAKE");
-		for(let j = 0; j < vmnlabels.length; j++) {
-			if(vmnlabels[j]["value"] == vehicleModel[i].toString()) {
-				buildLabel.push(vmnlabels[j]["label"]);
-				break;
-			}
+	  }
+	  if(fullName.length == 0) fullName.push("UNKNOWN MAKE");
+	  for(let j = 0; j < vmnlabels.length; j++) {
+		if(vmnlabels[j]["value"] == modelNames[i].toString()) {
+			fullName.push(vmnlabels[j]["label"]);
+			break;
 		}
-		if(buildLabel.length == 1) buildLabel.push("(UNKNOWN MODEL)");
-		if (buildLabel[1] == null){
-			readableLabels.push(buildLabel[0]);
-		}
-		else {
-			readableLabels.push(buildLabel[0] + " " + buildLabel[1]);
-		}
-	}
+	  }
+	  if(fullName.length == 1) fullName.push("(UNKNOWN MODEL)");
+	  readableLabels.push(fullName[0] + " " + fullName[1]);
+  }
+  
+  
+  for(let i = makeNames.length; i < 5; i++) {
+	  readableLabels.push("No Series");
+  }
+	
 	
   if(type === "Bar") {
 	  const data = {
 		datasets: [
 		  {
 			label: `${readableLabels[0]}`,
-			data: arrayOfAverageDeaths[0],
+			data: series[0],
 			backgroundColor: "rgba(255, 99, 132, 0.5)"
 		  },
 		  {
 			label: `${readableLabels[1]}`,
-			data: arrayOfAverageDeaths[1],
+			data: series[1],
 			backgroundColor: "rgba(255, 255, 132, 0.5)"
 		  },
 		  {
 			label: `${readableLabels[2]}`,
-			data: arrayOfAverageDeaths[2],
+			data: series[2],
 			backgroundColor: "rgba(255, 99, 255, 0.5)"
 		  },
 		  {
 			label: `${readableLabels[3]}`,
-			data: arrayOfAverageDeaths[3],
+			data: series[3],
 			backgroundColor: "rgba(99, 255, 132, 0.5)"
 		  },
 		  {
 			label: `${readableLabels[4]}`,
-			data: arrayOfAverageDeaths[4],
+			data: series[4],
 			backgroundColor: "rgba(99, 255, 255, 0.5)"
 		  }
 		],
@@ -286,27 +287,27 @@ function Chart2(props) {
 		datasets: [
 		  {
 			label: `${readableLabels[0]}`,
-			data: arrayOfAverageDeaths[0],
+			data: series[0],
 			backgroundColor: "rgba(255, 99, 132, 0.7)"
 		  },
 		  {
 			label: `${readableLabels[1]}`,
-			data: arrayOfAverageDeaths[1],
+			data: series[1],
 			backgroundColor: "rgba(255, 255, 132, 0.7)"
 		  },
 		  {
 			label: `${readableLabels[2]}`,
-			data: arrayOfAverageDeaths[2],
+			data: series[2],
 			backgroundColor: "rgba(255, 99, 255, 0.7)"
 		  },
 		  {
 			label: `${readableLabels[3]}`,
-			data: arrayOfAverageDeaths[3],
+			data: series[3],
 			backgroundColor: "rgba(99, 255, 132, 0.7)"
 		  },
 		  {
 			label: `${readableLabels[4]}`,
-			data: arrayOfAverageDeaths[4],
+			data: series[4],
 			backgroundColor: "rgba(99, 255, 255, 0.7)"
 		  }
 		]
