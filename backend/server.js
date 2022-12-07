@@ -152,7 +152,7 @@ app.get('/getQuery2', async (req, res) => {
 		}
 
 		const query = 
-		  `SELECT DISTINCT VEHICLE_MAKE, VEHICLE_MODEL_NAME, CRASH_YEAR, AVG(DEATH_COUNT) 
+		  `SELECT DISTINCT VEHICLE_MAKE, VEHICLE_MODEL_NAME, CRASH_YEAR, AVG(DEATH_COUNT) * 1000 
 			FROM "DYLANTOSH".Unit
 			JOIN "CWOJTAK".Crash ON "CWOJTAK".Crash.CRASH_ID = "DYLANTOSH".Unit.CRASH_ID
 			WHERE (VEHICLE_MAKE, VEHICLE_MODEL_NAME) IN 
@@ -162,7 +162,10 @@ app.get('/getQuery2', async (req, res) => {
 					WHERE VEHICLE_MAKE IS NOT NULL AND VEHICLE_MODEL_NAME IS NOT NULL
 					${filters}
 					GROUP BY VEHICLE_MAKE, VEHICLE_MODEL_NAME
-					HAVING COUNT(*) > 12000
+					HAVING COUNT(*) > 0.005 * (SELECT COUNT(*) FROM "DYLANTOSH".Unit, "CWOJTAK".Crash
+						WHERE VEHICLE_MAKE IS NOT NULL AND VEHICLE_MODEL_NAME IS NOT null
+						AND "DYLANTOSH".Unit.CRASH_ID = "CWOJTAK".Crash.CRASH_ID
+						${filters})
 					ORDER BY AVG(DEATH_COUNT) DESC
 					FETCH FIRST 5 ROWS ONLY)
 			${filters}
@@ -413,10 +416,10 @@ app.get('/getTupleCount', async (req, res) => {
 		const result = await connection.execute(`SELECT COUNT(*) FROM "CWOJTAK".Crash`);
 		const result2 = await connection.execute(`SELECT COUNT(*) FROM "DYLANTOSH".Unit`);
 		const result3 = await connection.execute(`SELECT COUNT(*) FROM "JONATHAN.TROST".Person`);
-		
+
 		console.log("Completed request");
 	  
-	  try {
+      try {
 			await connection.close();
 	    }
 		catch (err) {
@@ -424,19 +427,19 @@ app.get('/getTupleCount', async (req, res) => {
 		}
 	  
       return {data: result.rows[0][0] + result2.rows[0][0] + result3.rows[0][0]};
-    } 
-    catch(error) {
-      return error;
+      } 
+      catch(error) {
+        return error;
+      }
     }
-  }
 
   fetchTupleCount()
-  .then(dbRes =>{
-    res.send(dbRes);
-  })
-  .catch(err =>{
-    res.send(err);
-  })
+    .then(dbRes =>{
+      res.send(dbRes);
+    })
+    .catch(err =>{
+      res.send(err);
+    })
 })
 
 process.once("SIGTERM", deinit_database).once("SIGINT", deinit_database);

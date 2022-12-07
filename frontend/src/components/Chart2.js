@@ -54,7 +54,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: "Average Number of Fatalities Grouped by Vehicle Make",
+				  text: "Average Number of Fatalities Per 1000 Crashes Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -122,7 +122,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-					text: "Average Number of Fatalities Grouped by Vehicle Make",
+					text: "Average Number of Fatalities Per 1000 Crashes Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -165,7 +165,7 @@ function Chart2(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Number of Fatalities",
+						text: "Average Number of Fatalities Per 1000 Crashes",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -209,7 +209,7 @@ function Chart2(props) {
 	var j = 0;
 	while (i < data2.length) {
 		var averageDeath = [];
-		for (let k = 0; k < numOfYears; k++) {
+		for (let k = 0; (k < numOfYears) && (i < data2.length); k++) {
 			var l = {};
 			l.x = xlabels[i]
 			l.y = data2[i][3]
@@ -245,6 +245,8 @@ function Chart2(props) {
 			readableLabels.push(buildLabel[0] + " " + buildLabel[1]);
 		}
 	}
+	console.log(data2);
+	console.log(arrayOfAverageDeaths);
 	
   if(type === "Bar") {
 	  const data = {

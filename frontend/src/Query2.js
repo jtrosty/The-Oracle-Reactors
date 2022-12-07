@@ -70,28 +70,20 @@ class Query2Manager extends React.Component {
 					<h3>Options</h3>
 					<SChartType handleChange={(value) => { this.setState({chartType: value }) }} />
 					<h3>Filters</h3>
-					<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
 					<SCrashDate handleChange1={(value) => { this.setState({cd1: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} handleChange2={(value) => { this.setState({cd2: `to_date(\'${value}\', \'YYYY-DD-MM\')`}) }} /> 
 					<SActiveSchoolZoneFlag handleChange={(value) => { this.setState({aszf: value}) }} />
 					<SAtIntersection handleChange={(value) => { this.setState({ai: value}) }} />
-					<SCrashDeathCount handleChange={(value) => { this.setState({cdc: value.target.value}) }} handleOpChange={(value) => { this.setState({cdcop: value}) }} />
 					<SConstructionZoneFlag handleChange={(value) => { this.setState({czf: value}) }} /> 
 					<SStopSignFlag handleChange={(value) => { this.setState({ssf: value}) }} />
 					<SYieldSignFlag handleChange={(value) => { this.setState({ysf: value}) }} /> 
 					<STrafficControlType handleChange={(value) => { this.setState({tct: value}) }} /> 
 					<SDayOfWeek handleChange={(value) => { this.setState({dow: value}) }} />
-					<SCrashInjuryCount handleChange={(value) => { this.setState({ctic: value.target.value}) }} handleOpChange={(value) => { this.setState({cticop: value}) }} />
-					<SUnitDeathCount handleChange={(value) => { this.setState({udc: value.target.value}) }} handleOpChange={(value) => { this.setState({udcop: value}) }} /> 
-					<SVehicleModelName handleChange={(value) => { this.setState({vmn: value}) }} /> 
 					<SVehicleMake handleChange={(value) => { this.setState({vm: value}) }} /> 
-					<SUnitNotInjuredCount handleChange={(value) => { this.setState({unic: value.target.value}) }} handleOpChange={(value) => { this.setState({udicop: value}) }} /> 
-					<SUnitTotalInjuredCount handleChange={(value) => { this.setState({utic: value.target.value}) }} handleOpChange={(value) => { this.setState({uticop: value}) }} /> 
 					<SVehicleModelYear handleChange={(value) => { this.setState({vmy: value}) }} /> 
 					<SContributingFactor1 handleChange={(value) => { this.setState({cf1: value}) }} /> 
 					<SContributingFactor2 handleChange={(value) => { this.setState({cf2: value}) }} /> 
 					<SContributingFactor3 handleChange={(value) => { this.setState({cf3: value}) }} /> 
 					<SCommercialVehicleType handleChange={(value) => { this.setState({cvt: value}) }} /> 
-					<SUnitDescription handleChange={(value) => { this.setState({ud: value}) }} /> 
 					
 					<button onClick={ () => {
 						this.setState({load: true});
@@ -105,6 +97,14 @@ class Query2Manager extends React.Component {
 	}
 }
 
+					//<SVehicleModelName handleChange={(value) => { this.setState({vmn: value}) }} /> 
+					//<SUnitNotInjuredCount handleChange={(value) => { this.setState({unic: value.target.value}) }} handleOpChange={(value) => { this.setState({udicop: value}) }} /> 
+					//<SUnitTotalInjuredCount handleChange={(value) => { this.setState({utic: value.target.value}) }} handleOpChange={(value) => { this.setState({uticop: value}) }} /> 
+					//<SCrashTime handleChange1={(value) => { this.setState({ct1: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} handleChange2={(value) => { this.setState({ct2: `to_timestamp(\'01-OCT-22 ${value}\', \'DD-MON-YY HH24::MI::SS\')`}) }} /> 
+					//<SCrashDeathCount handleChange={(value) => { this.setState({cdc: value.target.value}) }} handleOpChange={(value) => { this.setState({cdcop: value}) }} />
+					//<SCrashInjuryCount handleChange={(value) => { this.setState({ctic: value.target.value}) }} handleOpChange={(value) => { this.setState({cticop: value}) }} />
+					//<SUnitDeathCount handleChange={(value) => { this.setState({udc: value.target.value}) }} handleOpChange={(value) => { this.setState({udcop: value}) }} /> 
+					//<SUnitDescription handleChange={(value) => { this.setState({ud: value}) }} /> 
 const Query2 = () => {
   return (
 	<div className="bodyContainer">
