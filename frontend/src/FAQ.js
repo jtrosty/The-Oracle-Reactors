@@ -20,7 +20,7 @@ class FAQManager extends React.Component {
 		
 		axios.get('http://localhost:5000/getTupleCount')
 		.then((response) => {
-			console.log(response.data.data); //Debug information
+			//console.log(response.data.data); //Debug information
 			if(response.data.data === undefined)
 			{
 				this.setState({load: true});
