@@ -54,7 +54,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: "Average Number of Fatalities Grouped by Vehicle Make",
+				  text: "Average Number of Fatalities Per 1000 Crashes Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -122,7 +122,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-					text: "Average Number of Fatalities Grouped by Vehicle Make",
+					text: "Average Number of Fatalities Per 1000 Crashes Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -165,7 +165,7 @@ function Chart2(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Number of Fatalities",
+						text: "Average Number of Fatalities Per 1000 Crashes",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -204,6 +204,14 @@ function Chart2(props) {
 	if(add) modelNames.push(data2[i][1]);
   }
 
+
+	var arrayOfAverageDeaths = [[],[],[],[],[]];
+	var i = 0;
+	var j = 0;
+	while (i < data2.length) {
+		var averageDeath = [];
+		for (let k = 0; (k < numOfYears) && (i < data2.length); k++) {
+
   var series = [];
   
   for(let i = 0; i < makeNames.length; i++) {
@@ -236,6 +244,7 @@ function Chart2(props) {
 			fullName.push(vmnlabels[j]["label"]);
 			break;
 		}
+
 	  }
 	  if(fullName.length == 1) fullName.push("(UNKNOWN MODEL)");
 	  readableLabels.push(fullName[0] + " " + fullName[1]);
