@@ -54,7 +54,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-				  text: "Average Number of Fatalities Per 1000 Crashes Grouped by Vehicle Make",
+				  text: "Average Number of Fatalities Per 1000 Crashed Vehicles Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -87,7 +87,7 @@ function Chart2(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Number of Fatalities",
+						text: "Average Number of Fatalities Per 1000 Crashed Vehicles",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -122,7 +122,7 @@ function Chart2(props) {
 			  },
 			  title: {
 				  display: true,
-					text: "Average Number of Fatalities Per 1000 Crashes Grouped by Vehicle Make",
+					text: "Average Number of Fatalities Per 1000 Crashed Vehicles Grouped by Vehicle Make",
 				  color: '#FFF',
 				  font: {
 					  size: 30
@@ -165,7 +165,7 @@ function Chart2(props) {
 				y: {
 					title: {
 						display: true,
-						text: "Average Number of Fatalities Per 1000 Crashes",
+						text: "Average Number of Fatalities Per 1000 Crashed Vehicles",
 						color: '#FFF',
 						font: {
 							size: 16
@@ -203,14 +203,6 @@ function Chart2(props) {
 	if(add) makeNames.push(data2[i][0]);
 	if(add) modelNames.push(data2[i][1]);
   }
-
-
-	var arrayOfAverageDeaths = [[],[],[],[],[]];
-	var i = 0;
-	var j = 0;
-	while (i < data2.length) {
-		var averageDeath = [];
-		for (let k = 0; (i < data2.length); k++) {
 
   var series = [];
   
@@ -326,5 +318,5 @@ function Chart2(props) {
 	);
   }
 }
-}} 
+ 
 export default Chart2;
